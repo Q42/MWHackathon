@@ -7,39 +7,77 @@ using log4net;
 
 namespace MWHackathonHarvester.Services
 {
-  public class DatabaseService
+  public class DatabaseService : IDisposable
   {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseService));
 
-    public List<Feed> GetAllFeeds()
+    private DatabaseDataContext db;
+    public DatabaseService()
     {
-      using (var db = new DatabaseDataContext())
-        return db.Feeds.ToList();
+      db = new DatabaseDataContext();
     }
 
-    public List<Entry> GetAllEntries(int FeedId)
+    public List<Feed> GetAllFeeds()
     {
-      using (var db = new DatabaseDataContext())
-        return db.Entries.Where(e => e.feed_id == FeedId).ToList();
+      return db.Feeds.ToList();
+    }
+
+    public List<Entry> GetAllEntries(int feedId)
+    {
+      return db.Entries.Where(e => e.feed_id == feedId).ToList();
     }
 
     public Feed GetFeed(string name)
     {
-      using (var db = new DatabaseDataContext())
+      var feed = db.Feeds.SingleOrDefault(f => f.name == name);
+      if (feed == null)
       {
-        var feed = db.Feeds.SingleOrDefault(f => f.name == name);
-        if (feed == null)
+        log.Warn("Creating new feed: " + name);
+        feed = new Feed() { name = name };
+        db.Feeds.InsertOnSubmit(feed);
+        db.SubmitChanges();
+      }
+      return feed;
+    }
+
+    public Entry GetEntry(string objectId, int feedId)
+    {
+      return db.Entries.SingleOrDefault(e => e.object_id == objectId && e.feed_id == feedId);
+    }
+
+    public void SaveEntries(IEnumerable<Entry> entries)
+    {
+      int count = 0;
+      int skipped = 0;
+      foreach (var entry in entries)
+      {
+        count++;
+
+        // check if exists
+        Entry existing = GetEntry(entry.object_id, entry.feed_id);
+        if (existing != null)
         {
-          log.Warn("Creating new feed: " + name);
-          feed = new Feed() { name = name };
-          db.Feeds.InsertOnSubmit(feed);
-          db.SubmitChanges();
+          skipped++;
+          continue;
         }
-        return feed;
+
+        if (skipped > 0)
+        {
+          log.Debug("Skipped " + skipped + " entries");
+          skipped = 0;
+        }
+
+        log.Debug("Inserting " + entry.object_id);
+
+        db.Entries.InsertOnSubmit(entry);
+        db.SubmitChanges();
       }
     }
 
-
+    public void Dispose()
+    {
+      db.Dispose();
+    }
   }
 }

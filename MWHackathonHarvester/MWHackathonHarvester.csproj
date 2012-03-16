@@ -38,6 +38,7 @@
       <HintPath>packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />
     <Compile Include="Models\Database.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,6 +61,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\Utils.cs" />
+    <Compile Include="Services\OAIService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
   </ItemGroup>
   <ItemGroup>

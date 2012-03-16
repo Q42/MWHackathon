@@ -327,7 +327,7 @@ namespace MWHackathonHarvester.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_name", DbType="Text", UpdateCheck=UpdateCheck.Never)]
 		public string object_name
 		{
 			get
@@ -347,7 +347,7 @@ namespace MWHackathonHarvester.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
 		public string object_id
 		{
 			get

@@ -13,8 +13,8 @@
       <Column Name="feed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="lastimported_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="body" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="object_name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="object_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="object_name" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="object_id" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="Feed_Entry" Member="Feed" ThisKey="feed_id" OtherKey="id" Type="Feed" IsForeignKey="true" />
     </Type>
   </Table>

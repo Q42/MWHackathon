@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using log4net;
 using MWHackathonHarvester.Services;
+using MWHackathonHarvester.Feeds;
 
 namespace MWHackathonHarvester
 {
@@ -17,8 +18,11 @@ namespace MWHackathonHarvester
       log.Info("Starting harvest");
 
       var db = new DatabaseService();
+      
+      var rijks = new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam"));
+      var rijksEntries = rijks.GetEntries();
+      db.SaveEntries(rijksEntries);
 
-      var feed = db.GetFeed("Rijksmuseum Amsterdam");
 
       Console.WriteLine("Done!");
       Console.ReadKey(true);
