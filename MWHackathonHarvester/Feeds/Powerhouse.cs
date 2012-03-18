@@ -59,5 +59,10 @@ namespace MWHackathonHarvester.Feeds
         return GetXpathInnerText(el, "summary");
       return title;
     }
+
+    public override string GetEntryImageUrl(XmlElement el)
+    {
+      return null;
+    }
   }
 }

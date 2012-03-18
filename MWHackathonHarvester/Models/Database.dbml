@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="temp_oai_lukas" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=ws04;Initial Catalog=temp_oai_lukas;Persist Security Info=True;User ID=oai" SettingsObjectName="MWHackathonHarvester.Properties.Settings" SettingsPropertyName="temp_oai_lukasConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="mwhackathon" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=mwhackathon;Integrated Security=True" SettingsObjectName="MWHackathonHarvester.Properties.Settings" SettingsPropertyName="mwhackathonConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Feeds" Member="Feeds">
     <Type Name="Feed">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Feed_Entry" Member="Entries" ThisKey="id" OtherKey="feed_id" Type="Entry" />
     </Type>
   </Table>
   <Table Name="dbo.Entries" Member="Entries">
@@ -14,8 +13,8 @@
       <Column Name="lastimported_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="body" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="object_name" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="object_id" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Feed_Entry" Member="Feed" ThisKey="feed_id" OtherKey="id" Type="Feed" IsForeignKey="true" />
+      <Column Name="object_id" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="object_imageurl" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

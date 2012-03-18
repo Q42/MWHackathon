@@ -22,8 +22,8 @@ namespace MWHackathonHarvester
       //db.SaveEntries(new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam")).GetEntries());
       //db.SaveEntries(new Powerhouse(db.GetFeed("Powerhouse")).GetEntries());
       //db.SaveEntries(new BrooklynMuseum(db.GetFeed("Brooklyn Museum")).GetEntries());
-      db.SaveEntries(new VictoriaAndAlbertMuseum(db.GetFeed("Victoria & Albert Museum")).GetEntries());
-
+      //db.SaveEntries(new VictoriaAndAlbertMuseum(db.GetFeed("Victoria & Albert Museum")).GetEntries());
+      db.SaveEntries(new CooperHewitt(db.GetFeed("Cooper Hewitt")).GetEntries());
 
       Console.WriteLine("Done!");
       Console.ReadKey(true);

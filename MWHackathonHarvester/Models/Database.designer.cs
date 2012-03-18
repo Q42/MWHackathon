@@ -22,7 +22,7 @@ namespace MWHackathonHarvester.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="temp_oai_lukas")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="mwhackathon")]
 	public partial class DatabaseDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,7 +39,7 @@ namespace MWHackathonHarvester.Models
     #endregion
 		
 		public DatabaseDataContext() : 
-				base(global::MWHackathonHarvester.Properties.Settings.Default.temp_oai_lukasConnectionString, mappingSource)
+				base(global::MWHackathonHarvester.Properties.Settings.Default.mwhackathonConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -95,8 +95,6 @@ namespace MWHackathonHarvester.Models
 		
 		private string _name;
 		
-		private EntitySet<Entry> _Entries;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -109,7 +107,6 @@ namespace MWHackathonHarvester.Models
 		
 		public Feed()
 		{
-			this._Entries = new EntitySet<Entry>(new Action<Entry>(this.attach_Entries), new Action<Entry>(this.detach_Entries));
 			OnCreated();
 		}
 		
@@ -153,19 +150,6 @@ namespace MWHackathonHarvester.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Feed_Entry", Storage="_Entries", ThisKey="id", OtherKey="feed_id")]
-		public EntitySet<Entry> Entries
-		{
-			get
-			{
-				return this._Entries;
-			}
-			set
-			{
-				this._Entries.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -184,18 +168,6 @@ namespace MWHackathonHarvester.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Entries(Entry entity)
-		{
-			this.SendPropertyChanging();
-			entity.Feed = this;
-		}
-		
-		private void detach_Entries(Entry entity)
-		{
-			this.SendPropertyChanging();
-			entity.Feed = null;
 		}
 	}
 	
@@ -217,7 +189,7 @@ namespace MWHackathonHarvester.Models
 		
 		private string _object_id;
 		
-		private EntityRef<Feed> _Feed;
+		private string _object_imageurl;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -235,11 +207,12 @@ namespace MWHackathonHarvester.Models
     partial void Onobject_nameChanged();
     partial void Onobject_idChanging(string value);
     partial void Onobject_idChanged();
+    partial void Onobject_imageurlChanging(string value);
+    partial void Onobject_imageurlChanged();
     #endregion
 		
 		public Entry()
 		{
-			this._Feed = default(EntityRef<Feed>);
 			OnCreated();
 		}
 		
@@ -274,10 +247,6 @@ namespace MWHackathonHarvester.Models
 			{
 				if ((this._feed_id != value))
 				{
-					if (this._Feed.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.Onfeed_idChanging(value);
 					this.SendPropertyChanging();
 					this._feed_id = value;
@@ -347,7 +316,7 @@ namespace MWHackathonHarvester.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
 		public string object_id
 		{
 			get
@@ -367,36 +336,22 @@ namespace MWHackathonHarvester.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Feed_Entry", Storage="_Feed", ThisKey="feed_id", OtherKey="id", IsForeignKey=true)]
-		public Feed Feed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_imageurl", DbType="VarChar(255)")]
+		public string object_imageurl
 		{
 			get
 			{
-				return this._Feed.Entity;
+				return this._object_imageurl;
 			}
 			set
 			{
-				Feed previousValue = this._Feed.Entity;
-				if (((previousValue != value) 
-							|| (this._Feed.HasLoadedOrAssignedValue == false)))
+				if ((this._object_imageurl != value))
 				{
+					this.Onobject_imageurlChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Feed.Entity = null;
-						previousValue.Entries.Remove(this);
-					}
-					this._Feed.Entity = value;
-					if ((value != null))
-					{
-						value.Entries.Add(this);
-						this._feed_id = value.id;
-					}
-					else
-					{
-						this._feed_id = default(int);
-					}
-					this.SendPropertyChanged("Feed");
+					this._object_imageurl = value;
+					this.SendPropertyChanged("object_imageurl");
+					this.Onobject_imageurlChanged();
 				}
 			}
 		}

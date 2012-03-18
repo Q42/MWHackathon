@@ -5,20 +5,20 @@ using System.Text;
 using MWHackathonHarvester.Models;
 using log4net;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 namespace MWHackathonHarvester.Services
 {
-  public abstract class XMLService
+  public abstract class JSONService
   {
 
-    private static readonly ILog log = LogManager.GetLogger(typeof(XMLService));
+    private static readonly ILog log = LogManager.GetLogger(typeof(JSONService));
 
     public Feed Feed { get; set; }
-    public abstract IEnumerable<XmlDocument> GetPagedXml();
-    public abstract string XPathToRecord { get; }
-    public abstract string GetEntryId(XmlElement el);
-    public abstract string GetEntryName(XmlElement el);
-    public abstract string GetEntryImageUrl(XmlElement el);
+    public abstract IEnumerable<JObject> GetObjects();
+    public abstract string GetEntryId(JObject obj);
+    public abstract string GetEntryName(JObject obj);
+    public abstract string GetEntryImageUrl(JObject obj);
 
     /// <summary>
     /// parses OAI XML and returns each item individually
@@ -28,13 +28,11 @@ namespace MWHackathonHarvester.Services
     public IEnumerable<Entry> GetEntries()
     {
       DateTime downloadedDate = DateTime.Now;
-      foreach (var xml in GetPagedXml())
+      foreach (var obj in GetObjects())
       {
-        foreach (XmlElement el in xml.SelectNodes(XPathToRecord))
-        {
-          string id = GetEntryId(el);
-          string name = GetEntryName(el);
-          string imageurl = GetEntryImageUrl(el);
+          string id = GetEntryId(obj);
+          string name = GetEntryName(obj);
+          string imageurl = GetEntryImageUrl(obj);
 
           if (string.IsNullOrEmpty(id))
           {
@@ -44,25 +42,24 @@ namespace MWHackathonHarvester.Services
 
           yield return new Entry
           {
-            body = el.OuterXml,
+            body = obj.ToString(),
             feed_id = Feed.id,
             lastimported_date = downloadedDate,
             object_id = id,
             object_name = name,
             object_imageurl = imageurl
           };
-        }
+        
       }
     }
 
-    public string GetXpathInnerText(XmlElement el, string xpath)
+    public string GetText(JObject obj, string path)
     {
       string id = null;
-      XmlNode idEl = el.SelectSingleNode(xpath);
+      var idEl = obj.SelectToken(path, false);
       if (idEl != null)
-        id = idEl.InnerText;
+        id = idEl.Value<string>();
       return id;
-
     }
 
   }

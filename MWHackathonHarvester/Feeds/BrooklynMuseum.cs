@@ -57,5 +57,13 @@ namespace MWHackathonHarvester.Feeds
     {
       return el.GetAttribute("title");
     }
+
+    public override string GetEntryImageUrl(XmlElement el)
+    {
+      XmlElement img = el.SelectSingleNode("images/image[1]") as XmlElement;
+      if (img != null)
+        return img.GetAttribute("uri");
+      return null;
+    }
   }
 }

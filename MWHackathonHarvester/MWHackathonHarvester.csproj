@@ -37,6 +37,9 @@
     <Reference Include="log4net">
       <HintPath>packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -49,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Feeds\BrooklynMuseum.cs" />
+    <Compile Include="Feeds\CooperHewitt.cs" />
     <Compile Include="Feeds\VictoriaAndAlbertMuseum.cs" />
     <Compile Include="Feeds\Powerhouse.cs" />
     <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />
@@ -64,6 +68,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\JSONService.cs" />
     <Compile Include="Services\Utils.cs" />
     <Compile Include="Services\XMLService.cs" />
     <Compile Include="Services\DatabaseService.cs" />

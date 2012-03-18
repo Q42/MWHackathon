@@ -55,5 +55,10 @@ namespace MWHackathonHarvester.Feeds
     {
       return GetXpathInnerText(el, ".//*[name()='dc:title']");
     }
+
+    public override string GetEntryImageUrl(XmlElement el)
+    {
+      return GetXpathInnerText(el, ".//*[name()='dc:format' and contains(.,'image')]");
+    }
   }
 }

@@ -54,5 +54,15 @@ namespace MWHackathonHarvester.Feeds
     {
       return GetXpathInnerText(el, "title");
     }
+
+    public override string GetEntryImageUrl(XmlElement el)
+    {
+      string imageId = GetXpathInnerText(el, "primary_image_id");
+      string prefix = "http://media.vam.ac.uk/media/thira/collection_images";
+      
+      if (!string.IsNullOrEmpty(imageId))
+        return prefix + "/" + imageId.Substring(0, 6) + "/" + imageId + ".jpg";
+      return null;
+    }
   }
 }
