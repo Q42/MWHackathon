@@ -18,10 +18,10 @@ namespace MWHackathonHarvester
       log.Info("Starting harvest");
 
       var db = new DatabaseService();
-      
-      var rijks = new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam"));
-      var rijksEntries = rijks.GetEntries();
-      db.SaveEntries(rijksEntries);
+
+      //db.SaveEntries(new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam")).GetEntries());
+      //db.SaveEntries(new Powerhouse(db.GetFeed("Powerhouse")).GetEntries());
+      //db.SaveEntries(new BrooklynMuseum(db.GetFeed("BrooklynMuseum")).GetEntries());
 
 
       Console.WriteLine("Done!");

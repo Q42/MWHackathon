@@ -36,8 +36,9 @@ namespace MWHackathonHarvester.Feeds
       int page = 1;
       while (page * AmountPerPage < Total)
       {
-        doc = Utils.DownloadXml(Url + "&start=" + (page * AmountPerPage) + 1);
+        doc = Utils.DownloadXml(Url + "&start=" + (page * AmountPerPage));
         yield return doc;
+        page++;
       }
     }
 

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feeds\BrooklynMuseum.cs" />
     <Compile Include="Feeds\Powerhouse.cs" />
     <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />
     <Compile Include="Models\Database.designer.cs">

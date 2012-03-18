@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MWHackathonHarvester.Models;
 using log4net;
+using System.Configuration;
 
 namespace MWHackathonHarvester.Services
 {
@@ -15,7 +16,7 @@ namespace MWHackathonHarvester.Services
     private DatabaseDataContext db;
     public DatabaseService()
     {
-      db = new DatabaseDataContext();
+      db = new DatabaseDataContext(ConfigurationManager.ConnectionStrings["MWHackathon3LLaptop"].ConnectionString);
     }
 
     public List<Feed> GetAllFeeds()
