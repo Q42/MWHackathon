@@ -1,0 +1,18 @@
+﻿@model List<KeyValuePair<Feed, int>>
+@{
+    ViewBag.Title = "Index";
+}
+
+<table>
+<tr>
+  <th>Feed</th>
+  <th># entries</th>
+</tr>
+@foreach (var feed in Model)
+{ 
+<tr>
+  <td><a href="@Url.Action("Search", new { feedId = feed.Key.id })">@feed.Key.name</a></td>
+  <td>@feed.Value</td>
+</tr>
+}
+</table>

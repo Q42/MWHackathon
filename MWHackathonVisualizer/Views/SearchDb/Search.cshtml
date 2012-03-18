@@ -1,0 +1,33 @@
+﻿@model List<Entry>
+@{
+    ViewBag.Title = "Search";
+}
+
+<table>
+  <tr>
+    <th>Feed</th>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Image</th>
+  </tr>
+@foreach (var entry in Model)
+{ 
+  <tr>
+  <td>@foreach (Feed feed in ViewBag.Feeds)
+      {
+        if (feed.id == entry.feed_id)
+        { 
+          @feed.name
+        }
+      }</td>
+  <td>@entry.object_id</td>
+  <td>@entry.object_name</td>
+  <td>
+    @if (!string.IsNullOrEmpty(entry.object_imageurl))
+    {
+    <img src="@entry.object_imageurl" />
+    }
+  </td>
+  </tr>
+}
+</table>

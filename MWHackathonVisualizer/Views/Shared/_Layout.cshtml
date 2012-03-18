@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+</head>
+
+<body>
+  
+  @using (Html.BeginForm("Search", "SearchDb", FormMethod.Get))
+  {
+    <select name="feedId">
+      <option value="0">- Everything -</option>
+      @foreach (Feed feed in ViewBag.Feeds)
+      { 
+        <option value="@feed.id" @if(Request.QueryString["feedId"] == feed.id.ToString()){<text>selected="selected"</text>}>@feed.name</option>
+      }
+    </select>
+    <input type="search" name="query" value="@Request.QueryString["query"]" />
+    <input type="submit" value="go!" />
+  }
+
+  <h2>MWHackathon Harvester</h2>
+
+
+    @RenderBody()
+</body>
+</html>
