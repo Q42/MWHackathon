@@ -8,13 +8,16 @@ using System.Xml;
 
 namespace MWHackathonHarvester.Services
 {
-  public abstract class OAIService
+  public abstract class XMLService
   {
 
-    private static readonly ILog log = LogManager.GetLogger(typeof(OAIService));
+    private static readonly ILog log = LogManager.GetLogger(typeof(XMLService));
 
-    public abstract Feed Feed { get; }
+    public Feed Feed { get; set; }
     public abstract IEnumerable<XmlDocument> GetPagedXml();
+    public abstract string XPathToRecord { get; }
+    public abstract string GetEntryId(XmlElement el);
+    public abstract string GetEntryName(XmlElement el);
 
     /// <summary>
     /// parses OAI XML and returns each item individually
@@ -26,18 +29,10 @@ namespace MWHackathonHarvester.Services
       DateTime downloadedDate = DateTime.Now;
       foreach (var xml in GetPagedXml())
       {
-        foreach (XmlElement el in xml.SelectNodes("//*[name()='record']"))
+        foreach (XmlElement el in xml.SelectNodes(XPathToRecord))
         {
-          string id = null;
-          XmlNode idEl = el.SelectSingleNode(".//*[name()='dc:identifier']");
-          if (idEl != null)
-            id = idEl.InnerText;
-
-          string name = null;
-          XmlNode nameEl = el.SelectSingleNode(".//*[name()='dc:title']");
-          if (nameEl != null)
-            name = nameEl.InnerText;
-
+          string id = GetEntryId(el);
+          string name = GetEntryName(el);
 
           if (string.IsNullOrEmpty(id))
           {
@@ -55,6 +50,16 @@ namespace MWHackathonHarvester.Services
           };
         }
       }
+    }
+
+    public string GetXpathInnerText(XmlElement el, string xpath)
+    {
+      string id = null;
+      XmlNode idEl = el.SelectSingleNode(xpath);
+      if (idEl != null)
+        id = idEl.InnerText;
+      return id;
+
     }
 
   }

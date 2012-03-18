@@ -10,30 +10,24 @@ using System.Xml;
 
 namespace MWHackathonHarvester.Feeds
 {
-  public class RijksmuseumAmsterdam : OAIService
+  public class RijksmuseumAmsterdam : XMLService
   {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(RijksmuseumAmsterdam));
-    private readonly Feed feed;
 
     public RijksmuseumAmsterdam(Feed feed)
     {
-      this.feed = feed;
+      this.Feed = feed;
     }
 
     private string Url
     {
       get { return "http://www.rijksmuseum.nl/api/oai/19d6f432-1576-4811-9dff-60d7e9d864c1/?verb=listrecords&metadataPrefix=oai_dc"; }
     }
-    private string ResumptionToken
+    private string ResumptionToken;
+    public override string XPathToRecord
     {
-      get;
-      set;
-    } 
-
-    public override Feed Feed
-    {
-      get { return feed; }
+      get { return "//*[name()='record']"; }
     }
 
     public override IEnumerable<XmlDocument> GetPagedXml()
@@ -50,6 +44,16 @@ namespace MWHackathonHarvester.Feeds
         ResumptionToken = doc.SelectSingleNode("/*/*/*[name()='resumptionToken']").InnerText;
         yield return doc;
       }
+    }
+
+    public override string GetEntryId(XmlElement el)
+    {
+      return GetXpathInnerText(el, ".//*[name()='dc:identifier']");
+    }
+
+    public override string GetEntryName(XmlElement el)
+    {
+      return GetXpathInnerText(el, ".//*[name()='dc:title']");
     }
   }
 }

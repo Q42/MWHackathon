@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feeds\Powerhouse.cs" />
     <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />
     <Compile Include="Models\Database.designer.cs">
       <AutoGen>True</AutoGen>
@@ -62,7 +63,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\Utils.cs" />
-    <Compile Include="Services\OAIService.cs" />
+    <Compile Include="Services\XMLService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
   </ItemGroup>
   <ItemGroup>
