@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Feeds\BrooklynMuseum.cs" />
     <Compile Include="Feeds\CooperHewitt.cs" />
+    <Compile Include="Feeds\MuseumVictoria.cs" />
     <Compile Include="Feeds\ScienceMuseum.cs" />
     <Compile Include="Feeds\Powerhouse.cs" />
     <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />

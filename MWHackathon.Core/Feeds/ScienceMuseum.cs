@@ -20,6 +20,11 @@ namespace MWHackathonHarvester.Feeds
     public ScienceMuseum(Feed feed)
     {
       this.Feed = feed;
+
+      foreach (var file in Files)
+        if (!file.Exists)
+          throw new Exception("ScienceMuseum files not found, please download from http://api.sciencemuseum.org.uk/documentation/collections/");
+
       FillObjectMediaMapping();
     }
 

@@ -106,11 +106,11 @@ namespace MWHackathonHarvester.Services
           catch (Exception ex)
           {
             skipped++;
-            //countErrored++;
-            //if (countErrored > 10)
-            //  throw;
-            //else
-            //  log.Fatal("Error nr " + countErrored + ", entry: " + entry.object_id + ", " + entry.object_name + ", " + entry.object_imageurl + ", " + entry.feed_id, ex);
+            countErrored++;
+            if (countErrored > 10)
+              throw;
+            else
+              log.Fatal("Error nr " + countErrored + ", entry: " + entry.object_id + ", " + entry.object_name + ", " + entry.object_imageurl + ", " + entry.feed_id, ex);
           }
         }
       }
