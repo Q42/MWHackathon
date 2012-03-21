@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Feeds\BrooklynMuseum.cs" />
     <Compile Include="Feeds\CooperHewitt.cs" />
+    <Compile Include="Feeds\ScienceMuseum.cs" />
     <Compile Include="Feeds\Powerhouse.cs" />
     <Compile Include="Feeds\RijksmuseumAmsterdam.cs" />
     <Compile Include="Feeds\VictoriaAndAlbertMuseum.cs" />
@@ -64,6 +65,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\CSVService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\JSONService.cs" />
     <Compile Include="Services\Utils.cs" />

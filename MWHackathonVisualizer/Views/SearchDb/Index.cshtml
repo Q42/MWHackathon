@@ -1,6 +1,7 @@
 ﻿@model List<KeyValuePair<Feed, int>>
 @{
     ViewBag.Title = "Index";
+    int total = 0;
 }
 
 <table>
@@ -8,11 +9,16 @@
   <th>Feed</th>
   <th># entries</th>
 </tr>
-@foreach (var feed in Model)
-{ 
+@foreach (var feed in Model.OrderBy(kvp => kvp.Key.name))
+{
+  total += feed.Value;
 <tr>
   <td><a href="@Url.Action("Search", new { feedId = feed.Key.id })">@feed.Key.name</a></td>
-  <td>@feed.Value</td>
+  <td style="text-align: right;">@feed.Value</td>
 </tr>
 }
+<tr>
+  <td>Total</td>
+  <th style="text-align: right;">@total</td>
+</tr>
 </table>

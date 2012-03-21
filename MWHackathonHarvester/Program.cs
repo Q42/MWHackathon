@@ -19,13 +19,15 @@ namespace MWHackathonHarvester
 
       var db = new DatabaseService();
 
-      db.DeleteEverything();
+      //db.DeleteEverything();
 
-      db.SaveEntries(new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam")).GetEntries());
-      db.SaveEntries(new Powerhouse(db.GetFeed("Powerhouse")).GetEntries());
-      db.SaveEntries(new BrooklynMuseum(db.GetFeed("Brooklyn Museum")).GetEntries());
-      db.SaveEntries(new VictoriaAndAlbertMuseum(db.GetFeed("Victoria & Albert Museum")).GetEntries());
-      db.SaveEntries(new CooperHewitt(db.GetFeed("Cooper Hewitt")).GetEntries());
+      //db.SaveEntries(new CooperHewitt(db.GetFeed("Cooper Hewitt")).GetEntries());
+      //db.SaveEntries(new RijksmuseumAmsterdam(db.GetFeed("Rijksmuseum Amsterdam")).GetEntries());
+      //db.SaveEntries(new BrooklynMuseum(db.GetFeed("Brooklyn Museum")).GetEntries());
+      //db.SaveEntries(new Powerhouse(db.GetFeed("Powerhouse")).GetEntries());
+      db.SaveEntries(new ScienceMuseum(db.GetFeed("Science Museum London")).GetEntries());
+      
+      //db.SaveEntries(new VictoriaAndAlbertMuseum(db.GetFeed("Victoria & Albert Museum")).GetEntries());
       // gebleven bij het National Maritime Museum op http://museum-api.pbworks.com/w/page/21933420/Museum%C2%A0APIs
 
       Console.WriteLine("Done!");

@@ -31,14 +31,15 @@ namespace MWHackathonHarvester.Services
       foreach (var obj in GetObjects())
       {
         string id = GetEntryId(obj);
-        string name = GetEntryName(obj);
-        string imageurl = GetEntryImageUrl(obj);
 
         if (string.IsNullOrEmpty(id))
         {
           log.Error("No ID found for element, skipping...");
           continue;
         }
+
+        string name = GetEntryName(obj);
+        string imageurl = GetEntryImageUrl(obj);
 
         yield return new Entry
         {

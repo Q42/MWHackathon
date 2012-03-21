@@ -60,33 +60,63 @@ namespace MWHackathonHarvester.Services
 
     public void SaveEntries(IEnumerable<Entry> entries)
     {
-      int count = 0;
-      int skipped = 0;
-      foreach (var entry in entries)
+      try
       {
-        count++;
-
-        if (count > 100)
-          return;
-
-        // check if exists
-        Entry existing = GetEntry(entry.object_id, entry.feed_id);
-        if (existing != null)
+        int countErrored = 0;
+        int count = 0;
+        int skipped = 0;
+        foreach (var entry in entries)
         {
-          skipped++;
-          continue;
+          count++;
+
+          //if (count > 100)
+            //return;
+
+          // check if exists
+          //Entry existing = GetEntry(entry.object_id, entry.feed_id);
+          //if (existing != null)
+          //{
+          //  skipped++;
+          //  continue;
+          //}
+
+          //if (skipped > 0)
+          //{
+          //  log.Debug("Skipped " + skipped + " entries");
+          //  skipped = 0;
+          //}
+
+          if (entry.object_imageurl != null && entry.object_imageurl.Length > 255)
+          {
+            log.Warn("ObjectImageUrl too long! " + entry.object_imageurl);
+            continue;
+          }
+          if (entry.object_name != null && entry.object_name.Length > 255)
+          {
+            log.Warn("ObjectName too long! " + entry.object_name);
+            continue;
+          }
+
+          try
+          {
+            db.Entries.InsertOnSubmit(entry);
+            db.SubmitChanges();
+            log.Debug("Inserting " + entry.object_id);
+          }
+          catch (Exception ex)
+          {
+            skipped++;
+            //countErrored++;
+            //if (countErrored > 10)
+            //  throw;
+            //else
+            //  log.Fatal("Error nr " + countErrored + ", entry: " + entry.object_id + ", " + entry.object_name + ", " + entry.object_imageurl + ", " + entry.feed_id, ex);
+          }
         }
-
-        if (skipped > 0)
-        {
-          log.Debug("Skipped " + skipped + " entries");
-          skipped = 0;
-        }
-
-        log.Debug("Inserting " + entry.object_id);
-
-        db.Entries.InsertOnSubmit(entry);
-        db.SubmitChanges();
+      }
+      catch (Exception ex)
+      {
+        log.Fatal("Error, stopping feed!", ex);
       }
     }
 

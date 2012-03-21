@@ -33,7 +33,7 @@ namespace MWHackathonHarvester.Feeds
       int page = 0;
       while (amount == AmountPerPage)
       {
-        XmlDocument doc = Utils.DownloadXml(Url + "&offset=" + page * AmountPerPage);
+        XmlDocument doc = Utils.DownloadXml(Url);// + "&offset=" + page * AmountPerPage);
         amount = doc.SelectNodes(XPathToRecord).Count;
         yield return doc;
         page++;
