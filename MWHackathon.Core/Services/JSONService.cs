@@ -9,12 +9,11 @@ using Newtonsoft.Json.Linq;
 
 namespace MWHackathonHarvester.Services
 {
-  public abstract class JSONService
+  public abstract class JSONService : DataService
   {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(JSONService));
 
-    public Feed Feed { get; set; }
     public abstract IEnumerable<JObject> GetObjects();
     public abstract string GetEntryId(JObject obj);
     public abstract string GetEntryName(JObject obj);
@@ -25,7 +24,7 @@ namespace MWHackathonHarvester.Services
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public IEnumerable<Entry> GetEntries()
+    public override IEnumerable<Entry> GetEntries()
     {
       DateTime downloadedDate = DateTime.Now;
       foreach (var obj in GetObjects())

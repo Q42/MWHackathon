@@ -1,9 +1,15 @@
 ﻿@model List<Entry>
 @{
     ViewBag.Title = "Search";
+    int count = 0;
 }
 
-<table>
+<style>
+  .alternate {background-color:#eee;}
+  td { vertical-align:middle; padding:10px; }
+</style>
+
+<table cellpadding="0" cellspacing="0">
   <tr>
     <th>Feed</th>
     <th>Id</th>
@@ -11,23 +17,30 @@
     <th>Image</th>
   </tr>
 @foreach (var entry in Model)
-{ 
-  <tr>
-  <td>@foreach (Feed feed in ViewBag.Feeds)
+{
+  count++;
+  bool alternate = count % 2 == 0;
+  <tr @if(alternate){<text>class="alternate"</text>}>
+    <td>@foreach (Feed feed in ViewBag.Feeds)
+        {
+          if (feed.id == entry.feed_id)
+          { 
+            @feed.name
+          }
+        }</td>
+    <td>@entry.object_id</td>
+    <td>@entry.object_name</td>
+    <td rowspan="2">
+      @if (!string.IsNullOrEmpty(entry.object_imageurl))
       {
-        if (feed.id == entry.feed_id)
-        { 
-          @feed.name
-        }
-      }</td>
-  <td>@entry.object_id</td>
-  <td>@entry.object_name</td>
-  <td>
-    @if (!string.IsNullOrEmpty(entry.object_imageurl))
-    {
-    <img src="@entry.object_imageurl" />
-    }
-  </td>
+      <img src="@entry.object_imageurl" />
+      }
+    </td>
+  </tr>
+  <tr @if(alternate){<text>class="alternate"</text>}>
+    <td colspan="3">
+      <textarea style="width:95%; height:100px;">@Html.Raw(entry.body.Replace("><", ">\n<"))</textarea>
+    </td>
   </tr>
 }
 </table>

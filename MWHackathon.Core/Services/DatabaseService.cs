@@ -70,7 +70,7 @@ namespace MWHackathonHarvester.Services
           count++;
 
           //if (count > 100)
-            //return;
+          //  return;
 
           // check if exists
           //Entry existing = GetEntry(entry.object_id, entry.feed_id);
@@ -123,6 +123,11 @@ namespace MWHackathonHarvester.Services
     public void Dispose()
     {
       db.Dispose();
+    }
+
+    public List<string> GetUniqueIds(Feed Feed)
+    {
+      return db.Entries.Where(e => e.feed_id == Feed.id).Select(e => e.object_id).ToList();
     }
   }
 }

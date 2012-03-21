@@ -21,7 +21,7 @@ namespace MWHackathonHarvester.Feeds
 
     private string Url
     {
-      get { return "http://museumvictoria.com.au/collections/api/v1/items/search?size=500&start=1&q=photograph"; }
+      get { return "http://museumvictoria.com.au/collections/api/v1/items/search?size=500&q=photograph"; }
     }
     private int Total;
     private int AmountPerPage = 500;

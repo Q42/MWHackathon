@@ -8,12 +8,11 @@ using System.Xml;
 
 namespace MWHackathonHarvester.Services
 {
-  public abstract class XMLService
+  public abstract class XMLService : DataService
   {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(XMLService));
 
-    public Feed Feed { get; set; }
     public abstract IEnumerable<XmlDocument> GetPagedXml();
     public abstract string XPathToRecord { get; }
     public abstract string GetEntryId(XmlElement el);
@@ -25,7 +24,7 @@ namespace MWHackathonHarvester.Services
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public IEnumerable<Entry> GetEntries()
+    public override IEnumerable<Entry> GetEntries()
     {
       DateTime downloadedDate = DateTime.Now;
       foreach (var xml in GetPagedXml())

@@ -10,12 +10,11 @@ using System.Text.RegularExpressions;
 
 namespace MWHackathonHarvester.Services
 {
-  public abstract class CSVService
+  public abstract class CSVService : DataService
   {
 
     private static readonly ILog log = LogManager.GetLogger(typeof(CSVService));
 
-    public Feed Feed { get; set; }
     public abstract IEnumerable<FileInfo> Files { get; }
     public abstract string separator { get; }
     public abstract bool firstLineContainsHeaders { get; }
@@ -29,7 +28,7 @@ namespace MWHackathonHarvester.Services
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public IEnumerable<Entry> GetEntries()
+    public override IEnumerable<Entry> GetEntries()
     {
       DateTime downloadedDate = DateTime.Now;
       foreach (var File in Files)
