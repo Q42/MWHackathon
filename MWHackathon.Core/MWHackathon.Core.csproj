@@ -51,6 +51,7 @@
     <Compile Include="Feeds\BrooklynMuseum.cs" />
     <Compile Include="Feeds\CooperHewitt.cs" />
     <Compile Include="Feeds\AmsterdamMuseum.cs" />
+    <Compile Include="Feeds\StedelijkMuseum.cs" />
     <Compile Include="Feeds\WestAustralia.cs" />
     <Compile Include="Feeds\MuseumVictoria.cs" />
     <Compile Include="Feeds\ScienceMuseum.cs" />
@@ -68,6 +69,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\CSVService.cs" />
     <Compile Include="Services\DatabaseService.cs" />

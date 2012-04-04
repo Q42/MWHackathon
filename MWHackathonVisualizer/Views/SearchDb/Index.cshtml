@@ -9,7 +9,7 @@
   <th>Feed</th>
   <th># entries</th>
 </tr>
-@foreach (var feed in Model.OrderBy(kvp => kvp.Key.name))
+@foreach (var feed in Model.OrderBy(kvp => kvp.Key.name).Where(f => f.Value > 0))
 {
   total += feed.Value;
 <tr>
