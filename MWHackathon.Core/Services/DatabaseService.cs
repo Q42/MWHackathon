@@ -5,6 +5,7 @@ using System.Text;
 using MWHackathon.Core.Models;
 using log4net;
 using System.Configuration;
+using System.IO;
 
 namespace MWHackathonHarvester.Services
 {
@@ -58,7 +59,7 @@ namespace MWHackathonHarvester.Services
       return db.Entries.SingleOrDefault(e => e.object_id == objectId && e.feed_id == feedId);
     }
 
-    public void UpdateEntries(IEnumerable<Entry> entries, DataService service)
+    public void UpdateEntries(IEnumerable<Entry> entries, DataService service, ImageService img)
     {
       try
       {
@@ -70,11 +71,13 @@ namespace MWHackathonHarvester.Services
             var oldImage = entry.object_imageurl;
             var newImage = service.GetEntryImageUrl(entry);
 
-            if (!string.IsNullOrEmpty(newImage) && oldImage != newImage)
+            if (!string.IsNullOrEmpty(newImage) && oldImage.ToLowerInvariant() != newImage)
             {
               entry.object_imageurl = newImage;
               db.SubmitChanges();
-              log.Debug("Updating " + entry.object_name);
+
+              DownloadImage(entry, img);
+              log.Debug("Updating and downloading " + entry.object_name);
             }
           }
           catch (Exception ex)
@@ -160,6 +163,23 @@ namespace MWHackathonHarvester.Services
     public List<string> GetUniqueIds(Feed Feed)
     {
       return db.Entries.Where(e => e.feed_id == Feed.id).Select(e => e.object_id).ToList();
+    }
+
+    public void DownloadImage(Entry entry, ImageService img)
+    {
+      var file = img.GetFilePath(entry);
+      if (file != null && !file.Exists)
+      {
+        try
+        {
+          img.DownloadImage(entry.object_imageurl, file);
+          Console.Write(".");
+        }
+        catch (FileNotFoundException)
+        {
+          log.Info("Image not found: " + entry.object_imageurl);
+        }
+      }
     }
   }
 }

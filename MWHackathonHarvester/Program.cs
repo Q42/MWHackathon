@@ -18,8 +18,13 @@ namespace MWHackathonHarvester
       log4net.Config.XmlConfigurator.Configure();
       log.Info("Starting harvest");
 
+      DirectoryInfo dir = new DirectoryInfo("c:\\MWHackathon\\Assets");
+
+
       using (var db = new DatabaseService())
       {
+        var img = new ImageService(dir, db.GetAllFeeds().ToList());
+
         //db.DeleteEverything();
 
         //db.SaveEntries(new CooperHewitt(db.GetFeed("Cooper Hewitt")).GetSubmittableEntries(db));
@@ -38,29 +43,14 @@ namespace MWHackathonHarvester
         // gebleven bij het National Maritime Museum op http://museum-api.pbworks.com/w/page/21933420/Museum%C2%A0APIs
 
 
-        db.UpdateEntries(db.GetAllEntries(db.GetFeed("Cooper Hewitt").id), new CooperHewitt(db.GetFeed("Cooper Hewitt")));
+        db.UpdateEntries(db.GetAllEntries(db.GetFeed("Amsterdam Museum").id), new AmsterdamMuseum(db.GetFeed("Amsterdam Museum")), img);
+        db.UpdateEntries(db.GetAllEntries(db.GetFeed("Cooper Hewitt").id), new CooperHewitt(db.GetFeed("Cooper Hewitt")), img);
 
 
         // download images
 
-        DirectoryInfo dir = new DirectoryInfo("App_Data/img");
-        var img = new ImageService(dir, db.GetAllFeeds().ToList());
-        foreach (var entry in db.GetAllEntries(db.GetFeed("Cooper Hewitt").id).Where(e => e.object_imageurl != null && e.object_imageurl != "404").OrderByDescending(e => e.feed_id))
-        {
-          var file = img.GetFilePath(entry);
-          if (file != null && !file.Exists)
-          {
-            try
-            {
-              img.DownloadImage(entry.object_imageurl, file);
-              Console.Write(".");
-            }
-            catch (FileNotFoundException)
-            {
-              log.Info("Image not found: " + entry.object_imageurl);
-            }
-          }
-        }
+        //foreach (var entry in db.GetAllEntries().Where(e => e.object_imageurl != null && e.object_imageurl != "404").OrderByDescending(e => e.feed_id))
+        //  db.DownloadImage(entry);
       }
 
       Console.WriteLine("Done!");
