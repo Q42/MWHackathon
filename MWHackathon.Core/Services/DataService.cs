@@ -5,6 +5,7 @@ using System.Text;
 using MWHackathon.Core.Models;
 using log4net;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 namespace MWHackathonHarvester.Services
 {
@@ -15,6 +16,7 @@ namespace MWHackathonHarvester.Services
 
     public Feed Feed { get; set; }
     public abstract IEnumerable<Entry> GetEntries();
+    public abstract string GetEntryImageUrl(Entry entry);
 
     /// <summary>
     /// parses OAI XML and returns each item individually

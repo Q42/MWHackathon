@@ -55,5 +55,10 @@ namespace MWHackathonHarvester.Feeds
     {
       return null;
     }
+
+    public override string GetEntryImageUrl(Entry entry)
+    {
+      return null;
+    }
   }
 }

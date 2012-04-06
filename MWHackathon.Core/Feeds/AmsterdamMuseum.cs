@@ -64,7 +64,7 @@ namespace MWHackathonHarvester.Feeds
     {
       XmlElement img = el.SelectSingleNode("reproduction/reproduction.identifier_URL") as XmlElement;
       if (img != null && img.InnerText.Length > 28)
-        return string.Format("http://ahm.adlibsoft.com/ahmimages/{0}", img.InnerText.Replace(@"..\..\DAT\collectie\images\",""));
+        return string.Format("http://ahm.adlibsoft.com/ahmimages/{0}", img.InnerText.ToLowerInvariant().Replace(@"..\..\DAT\collectie\images\","").Replace("\\","/"));
       return null;
     }
   }

@@ -58,6 +58,38 @@ namespace MWHackathonHarvester.Services
       return db.Entries.SingleOrDefault(e => e.object_id == objectId && e.feed_id == feedId);
     }
 
+    public void UpdateEntries(IEnumerable<Entry> entries, DataService service)
+    {
+      try
+      {
+
+        foreach (var entry in entries)
+        {
+          try
+          {
+            var oldImage = entry.object_imageurl;
+            var newImage = service.GetEntryImageUrl(entry);
+
+            if (!string.IsNullOrEmpty(newImage) && oldImage != newImage)
+            {
+              entry.object_imageurl = newImage;
+              db.SubmitChanges();
+              log.Debug("Updating " + entry.object_name);
+            }
+          }
+          catch (Exception ex)
+          {
+            log.Fatal("Error updating entry: " + entry.object_id + ", " + entry.object_name + ", " + entry.object_imageurl + ", " + entry.feed_id, ex);
+          }
+        }
+
+      }
+      catch (Exception ex)
+      {
+        log.Fatal("Error, stopping feed!", ex);
+      }
+    }
+
     public void SaveEntries(IEnumerable<Entry> entries)
     {
       try

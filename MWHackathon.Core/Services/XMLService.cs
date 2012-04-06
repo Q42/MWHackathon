@@ -19,6 +19,11 @@ namespace MWHackathonHarvester.Services
     public abstract string GetEntryName(XmlElement el);
     public abstract string GetEntryImageUrl(XmlElement el);
 
+    public override string GetEntryImageUrl(Entry entry)
+    {
+      throw new NotImplementedException();
+    }
+
     /// <summary>
     /// parses OAI XML and returns each item individually
     /// </summary>

@@ -64,5 +64,6 @@ namespace MWHackathonHarvester.Feeds
         return prefix + "/" + imageId.Substring(0, 6) + "/" + imageId + ".jpg";
       return null;
     }
+
   }
 }

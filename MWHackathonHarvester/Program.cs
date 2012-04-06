@@ -33,18 +33,19 @@ namespace MWHackathonHarvester
         //db.SaveEntries(new VictoriaAndAlbertMuseum(db.GetFeed("Victoria & Albert Museum")).GetSubmittableEntries(db));
 
         //db.SaveEntries(new WestAustralia(db.GetFeed("Western Australian Museum")).GetSubmittableEntries(db));
-        db.SaveEntries(new StedelijkMuseum(db.GetFeed("Stedelijk Museum Amsterdam")).GetSubmittableEntries(db));
+        //db.SaveEntries(new StedelijkMuseum(db.GetFeed("Stedelijk Museum Amsterdam")).GetSubmittableEntries(db));
         
         // gebleven bij het National Maritime Museum op http://museum-api.pbworks.com/w/page/21933420/Museum%C2%A0APIs
 
 
+        db.UpdateEntries(db.GetAllEntries(db.GetFeed("Cooper Hewitt").id), new CooperHewitt(db.GetFeed("Cooper Hewitt")));
 
 
         // download images
 
         DirectoryInfo dir = new DirectoryInfo("App_Data/img");
         var img = new ImageService(dir, db.GetAllFeeds().ToList());
-        foreach (var entry in db.GetAllEntries().Where(e => e.object_imageurl != null && e.object_imageurl != "404").OrderByDescending(e => e.feed_id))
+        foreach (var entry in db.GetAllEntries(db.GetFeed("Cooper Hewitt").id).Where(e => e.object_imageurl != null && e.object_imageurl != "404").OrderByDescending(e => e.feed_id))
         {
           var file = img.GetFilePath(entry);
           if (file != null && !file.Exists)

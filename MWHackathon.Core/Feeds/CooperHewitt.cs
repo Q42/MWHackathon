@@ -48,7 +48,15 @@ namespace MWHackathonHarvester.Feeds
 
     public override string GetEntryImageUrl(JObject obj)
     {
+      string mediaId = GetText(obj, "media_id");
+      if (!string.IsNullOrEmpty(mediaId))
+        return string.Format("http://data.cooperhewitt.org/media/350/{0}.jpg", mediaId);
       return GetText(obj, "thumbnail");
+    }
+
+    public override string GetEntryImageUrl(Entry entry)
+    {
+      return GetEntryImageUrl(JObject.Parse(entry.body));
     }
   }
 }
