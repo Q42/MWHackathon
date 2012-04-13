@@ -35,10 +35,36 @@ namespace MWHackathonVisualizer.Controllers
       using (var db = new DatabaseService())
       {
         string json = db.FacialData(url);
-        var faces = new Faces(json);
-        return Json(faces, JsonRequestBehavior.AllowGet);
+        var upFaces = new Faces(json, url);
+
+        var dbEntries = db.GetAllEntries().Where(e => e.facial_amount == upFaces.Amount && (e.imageheight >= 350 || e.imagewidth >=350));
+        dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
+        var dbFaces = GetFaces(dbEntries.Take(100).ToList());
+        if (upFaces.Items.First().GenderConfidence > 50)
+          dbFaces = dbFaces.Where(f => f.Items.First().GenderConfidence > 50 && f.Items.First().Gender == upFaces.Items.First().Gender).ToList();
+
+
+        var rnd = new Random();
+        var dbFace = dbFaces.OrderBy(e => rnd.Next()).First();
+
+        ViewBag.Faces = upFaces;
+        return View(dbFace);
+
+        //return Json(dbFaces, JsonRequestBehavior.AllowGet);
       }
 
+    }
+
+    private List<Faces> GetFaces(List<Entry> entries)
+    {
+      var result = new List<Faces>();
+
+      foreach (var entry in entries)
+      {
+        result.Add(new Faces(entry.facialdata, entry.object_imageurl));
+      }
+
+      return result;
     }
 
   }

@@ -110,13 +110,17 @@ namespace MWHackathonHarvester.Services
 
   public class Faces
   { 
-     public Faces(string json)
-      : this(JObject.Parse(json))
+     public Faces(string json, string url)
+      : this(JObject.Parse(json), url)
     { 
     }
 
-    public Faces(JObject json)
+     public String Url { get; set; }
+     //public int Proximity { get; set; }
+
+    public Faces(JObject json, string url)
     {
+      this.Url = url;
       this.Items = new List<Face>();
 
       var photo = json.SelectToken("photos")[0];
@@ -124,7 +128,13 @@ namespace MWHackathonHarvester.Services
       this.Amount = tags.Count();
       foreach (JObject t in tags)
         this.Items.Add(new Face(t));
+
+      Width = Convert.ToInt32(JSONService.GetText(photo, "width"));
+      Height = Convert.ToInt32(JSONService.GetText(photo, "height"));
     }
+
+    public int Width { get; set; }
+    public int Height { get; set; }
 
     public int Amount { get; set; }
     public List<Face> Items {get;set;}
@@ -143,10 +153,19 @@ namespace MWHackathonHarvester.Services
       };
       var attr = tag.SelectToken("attributes");
       var gender = attr.SelectToken("gender");
-      this.Gender = JSONService.GetText(gender, "value") == "male";
-      this.GenderConfidence = Convert.ToInt32(JSONService.GetText(gender, "confidence"));
+      if (gender == null)
+      {
+        this.GenderConfidence = 0;
+        this.Gender = false;
+      }
+      else
+      {
+        this.Gender = JSONService.GetText(gender, "value") == "male";
+        this.GenderConfidence = Convert.ToInt32(JSONService.GetText(gender, "confidence"));
+      }
     }
 
+    //public int LookingDirection { get; set; }
     public double Width { get; set; }
     public double Height { get; set; }
     public Coordinate Center { get; set; }

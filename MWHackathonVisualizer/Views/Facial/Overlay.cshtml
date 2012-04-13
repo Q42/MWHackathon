@@ -1,0 +1,38 @@
+﻿@model MWHackathonHarvester.Services.Faces
+@{
+  Layout = null;
+  MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
+}
+<style>
+img { position:absolute;
+      top:0; left:0; -webkit-mask-repeat: no-repeat; }
+  .count {display:none;}
+</style>
+<img src="@Model.Url" id="artobject" />
+
+@{ int count = 0; }
+@foreach (var face in uploaded.Items)
+{
+  int originalFaceHeight = (int)((Model.Items[count].Height / 100) * (double)Model.Height);
+  int overlayFaceHeight = (int)((face.Height / 100) * (double)uploaded.Height);
+  double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
+  <img src="@uploaded.Url" id="picture" style="-webkit-mask-image: url(http://www.webkit.org/blog-files/circle.svg);
+    height: @((int)(ratio * uploaded.Height))px;" />
+  <div class="count">(@Model.Items[count].Height * @Model.Height = @originalFaceHeight) / (@face.Height * @uploaded.Height = @overlayFaceHeight) = @ratio</div>
+  count++;
+}
+
+@*<style>
+#picture
+{
+  -webkit-mask-image: -webkit-radial-gradient(white,transparent 50%);
+}
+
+img { position:absolute;
+      top:0; left:0; }
+
+</style>
+
+<img src="@uploaded.Url" id="picture" />
+
+*@

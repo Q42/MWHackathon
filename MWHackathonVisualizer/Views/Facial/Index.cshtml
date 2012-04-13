@@ -1,0 +1,24 @@
+﻿@model List<KeyValuePair<Feed, int>>
+@{
+    ViewBag.Title = "Index";
+    int total = 0;
+}
+
+<table>
+<tr>
+  <th>Feed</th>
+  <th># entries</th>
+</tr>
+@foreach (var feed in Model.OrderBy(kvp => kvp.Key.name).Where(f => f.Value > 0))
+{
+  total += feed.Value;
+<tr>
+  <td><a href="@Url.Action("Search", new { feedId = feed.Key.id })">@feed.Key.name</a></td>
+  <td style="text-align: right;">@feed.Value</td>
+</tr>
+}
+<tr>
+  <td>Total</td>
+  <th style="text-align: right;">@total</td>
+</tr>
+</table>
