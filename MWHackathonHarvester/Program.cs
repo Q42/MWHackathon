@@ -60,7 +60,8 @@ namespace MWHackathonHarvester
           //db.DownloadImage(entry, img);
 
         // facial recognition
-        db.RecognizeFaces(db.GetAllEntriesWithImages().Where(e => e.facialdata == null).Select(e => e.id).ToList());
+        db.RecognizeFaces(db.GetAllEntriesWithImages().Where(e => e.facialdata == null && (e.imageheight >= 350 || e.imagewidth >= 350))
+          .OrderBy(e => e.imagewidth).Select(e => e.id).ToList());
         //db.FacesAmount(db.GetAllEntriesWithImages().Where(e => e.facialdata != null && e.facial_amount == null).Select(e => e.id).ToList());
 
         //int max = db.GetAllEntries().Count();

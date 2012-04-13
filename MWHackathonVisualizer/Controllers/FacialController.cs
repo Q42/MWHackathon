@@ -21,7 +21,7 @@ namespace MWHackathonVisualizer.Controllers
     public ActionResult Overlay(string url)
     {
       if (string.IsNullOrEmpty(url))
-        url = "http://img2.timeinc.net/people/i/2011/specials/beauties/mag/jennifer-lopez-435.jpg";
+        url = "http://twimg0-a.akamaihd.net/profile_images/769005756/paulstork_foto_normal.png";
 
       string filename = @"c:\MWHackathon\Assets\uploaded\" + url.Substring(url.LastIndexOf('/') + 1);
       if (!System.IO.File.Exists(filename))
@@ -37,11 +37,15 @@ namespace MWHackathonVisualizer.Controllers
         string json = db.FacialData(url);
         var upFaces = new Faces(json, url);
 
+        int amount = upFaces.Amount;
+        if (amount < 1)
+          throw new Exception("no faces found");
+
         var dbEntries = db.GetAllEntries().Where(e => e.facial_amount == upFaces.Amount && (e.imageheight >= 350 || e.imagewidth >=350));
         dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
         var dbFaces = GetFaces(dbEntries.Take(100).ToList());
-        if (upFaces.Items.First().GenderConfidence > 50)
-          dbFaces = dbFaces.Where(f => f.Items.First().GenderConfidence > 50 && f.Items.First().Gender == upFaces.Items.First().Gender).ToList();
+        //if (upFaces.Items.First().GenderConfidence > 50)
+          //dbFaces = dbFaces.Where(f => f.Items.First().GenderConfidence > 50 && f.Items.First().Gender == upFaces.Items.First().Gender).ToList();
 
 
         var rnd = new Random();

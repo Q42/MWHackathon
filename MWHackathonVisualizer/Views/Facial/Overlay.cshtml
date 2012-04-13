@@ -14,11 +14,13 @@ canvas { position:absolute;
   <p>Sorry, your browser doesn't support canvas.</p>
 </canvas>
 
+<button onclick="console.log(ctx.toDataURL());">I love it! Download!</button>
+
 <script>
-  var ctx1 = document.getElementById('artobject').getContext('2d');
+  var ctx = document.getElementById('artobject').getContext('2d');
   var img1 = new Image();
   img1.onload = function () {
-    ctx1.drawImage(img1, 0, 0);
+    ctx.drawImage(img1, 0, 0);
   };
   img1.src = '@Model.Url';
 </script>
@@ -27,22 +29,23 @@ canvas { position:absolute;
 @{ int count = 0; }
 @foreach (var face in uploaded.Items)
 {
-  int originalFaceHeight = (int)((Model.Items[count].Height / 100) * (double)Model.Height);
-  int overlayFaceHeight = (int)((face.Height / 100) * (double)uploaded.Height);
-  double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
-  <!--<img src="@uploaded.Url" id="picture" style="-webkit-mask-image: url(http://www.webkit.org/blog-files/circle.svg);
-    height: @((int)(ratio * uploaded.Height))px;" />
-  <div class="count">(@Model.Items[count].Height * @Model.Height = @originalFaceHeight) / (@face.Height * @uploaded.Height = @overlayFaceHeight) = @ratio</div>
-  -->
-  <canvas id="myDrawing" width="@Model.Width" height="@Model.Height">
-    <p>Sorry, your browser doesn't support canvas.</p>
-  </canvas>
+  int originalFaceHeight = (int)((Model.Items[count].Height / 100.0) * (double)Model.Height);
+  int originalFaceWidth = (int)((Model.Items[count].Width / 100.0) * (double)Model.Width);
+  int overlayFaceHeight = (int)((face.Height / 100.0) * (double)uploaded.Height);
+  int overlayFaceWidth = (int)((face.Width / 100.0) * (double)uploaded.Width);
+  var center = Model.Items[count].Center;
+  int left = (int)((center.x / 100.0) * Model.Width) - (originalFaceWidth / 2);
+  int top = (int)((center.y / 100.0) * Model.Height) - (originalFaceHeight / 2);
 
+  var overlayCenter = uploaded.Items[count].Center;
+  int overlayLeft = (int)((overlayCenter.x / 100.0) * uploaded.Width) - (overlayFaceWidth / 2);
+  int overlayTop = (int)((overlayCenter.y / 100.0) * uploaded.Height) - (overlayFaceHeight / 2);
+
+  double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
   <script>
-    var ctx = document.getElementById('myDrawing').getContext('2d');
     var img = new Image();
     img.onload = function () {
-      ctx.drawImage(img, 0, 0, @((int)(ratio * uploaded.Width)),@((int)(ratio * uploaded.Height)));
+      ctx.drawImage(img, @overlayLeft, @overlayTop, @overlayFaceWidth, @overlayFaceHeight, @left, @top, @originalFaceWidth, @originalFaceHeight);
     };
     img.src = '@uploaded.Url';
   </script>
@@ -50,12 +53,6 @@ canvas { position:absolute;
   count++;
 }
 
-
-<script>
-
-
-
-</script>
 
 @*<style>
 #picture

@@ -298,6 +298,7 @@ namespace MWHackathonHarvester.Services
           break;
         }
         Entry entry = db.Entries.Single(e => e.id == id);
+        log.Info("done: " + entry.feed_id + "." + entry.id);
 
         entry.facialdata = FacialData(entry.object_imageurl);
         db.SubmitChanges();
