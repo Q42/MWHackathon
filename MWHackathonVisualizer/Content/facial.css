@@ -1,0 +1,225 @@
+body {
+  padding: 0; margin: 0;
+  font-family: Verdana;
+  background: #222;
+}
+#logo {
+  position: absolute;
+  left: 10px; top: 7px;
+  font-size: 11px;
+  color: #333;
+}
+#user {
+  position: absolute;
+  right: 10px; top: 7px;
+  font-size: 11px;
+}
+#user a {
+  color: #333;
+}
+.sep {
+  color: #999;
+}
+h1 {
+  margin: 0px auto 20px auto;
+  text-shadow: 1px 1px rgba(255,255,255,0.7);
+}
+h1 img { margin-right: 10px;}
+#main {
+  background: #ccc url(/Content/award.png) 100px 50px no-repeat;
+  border-bottom: solid #444 4px;
+  text-shadow: 1px 1px rgba(255,255,255,0.7);
+  min-height:452px;
+}
+.page {
+  width: 630px;
+  margin: 0 auto;
+  position:relative; 
+}
+form {
+  margin: 0;
+  padding-bottom: 50px;
+}
+form, input, textarea {
+  font-size: 30px;
+  font-family: inherit;
+  outline: none;
+}
+#target {
+  width: 412px;
+  padding: 8px 8px;
+  border: solid #555 3px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -o-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+#award {
+  border: solid #444 4px;
+  margin: 20px 0;
+  width: 600px;
+  padding: 4px 8px;
+  height: 80px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -o-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+#submit {
+  position: absolute;
+  height: 78px;
+  margin: 48px 0 0 275px;
+  background: #11C703;
+  line-height: 20px;
+  color: #fff;
+  padding: 10px 40px;
+  border: solid #444 4px;
+  text-shadow: 1px 1px rgba(0,0,0,0.5);
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  -o-border-radius: 45px;
+  border-radius: 45px;
+  -webkit-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -moz-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -o-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  cursor: pointer;
+}
+#twitter-msg {
+  position: absolute;
+  font-size: 11px;
+  color: #888;
+  margin-top: 80px;
+  text-shadow: none;
+}
+#footer {
+  font-size: 11px;
+  color: #777;
+}
+#footer a {
+  color: #999;
+  text-decoration: none;
+}
+.placeholder {
+  color:#AAAAAA;
+}
+.error, .notice, .success
+{
+  padding: .8em;
+  margin-bottom: 1em;
+  border: 2px solid #ddd;
+}
+.error
+{
+  background: #FBE3E4;
+  color: #8a1f11;
+  border-color: #FBC2C4;
+}
+.notice
+{
+  background: #FFF6BF;
+  color: #514721;
+  border-color: #FFD324;
+}
+
+.notice > .options
+{
+  text-align: center;
+}
+
+.notice > .options > *
+{
+  margin: 0 20px;
+  border: 1px solid #555;
+  border-bottom-left-radius: 5px 5px;
+  border-bottom-right-radius: 5px 5px;
+  border-top-left-radius: 5px 5px;
+  border-top-right-radius: 5px 5px;
+  color: white;
+  padding: 4px 8px;
+  text-decoration: none;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+
+.notice > .options > .no
+{
+  background: #f88;
+}
+.notice > .options > .yes
+{
+  background: #4BC600;
+}
+
+.success
+{
+  background: #E6EFC2;
+  color: #264409;
+  border-color: #C6D880;
+}
+.error a
+{
+  color: #8a1f11;
+}
+.notice a
+{
+  color: #514721;
+}
+.success a
+{
+  color: #264409;
+}
+
+
+
+
+.scrolltop { width: 630px; background: url(/Img/scrolltop.png) no-repeat; height: 134px; position:relative;}
+.scrollcenter { background: url(/Img/scrollcenter.png) repeat-y; padding:30px; }
+.scrollbottom { width: 630px; background: url(/Img/scrollbottom.png) no-repeat; height: 134px; margin-top:-35px; }
+
+.scrollcenter { text-align:center; font-size:140%; font-weight:bold; line-height:180%; }
+.scrollto {}
+.scrollaward {}
+.scrollfrom {}
+#signet {position:absolute; top:-42px; left: 574px; }
+
+#topbar {
+  background-color: #ccc;
+  padding: 5px 0;
+  height: 30px;
+}
+#randomaward {
+  width: 610px;
+  margin: 0 auto;
+  font-size: 11px;
+  text-align: center;
+  background-color: #ddd;
+  color: #555;
+  padding: 5px 10px;
+  -moz-border-radius: 10px;
+  -moz-box-shadow: 0 0 10px #bbb;
+  -webkit-border-radius: 10px;
+  -webkit-box-shadow: 0 0 10px #bbb;
+}
+#randomaward a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+#randomaward .small-awardname {
+}
+#disclaimer {
+  width: 630px;
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+}

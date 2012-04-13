@@ -301,6 +301,9 @@ namespace MWHackathonHarvester.Services
         log.Info("done: " + entry.feed_id + "." + entry.id);
 
         entry.facialdata = FacialData(entry.object_imageurl);
+        entry.facial_amount = GetAmountFaces(entry.facialdata);
+
+
         db.SubmitChanges();
       }
     }
@@ -321,6 +324,20 @@ namespace MWHackathonHarvester.Services
       return Convert.ToInt32(((double)done / (double)max) * 100);
     }
 
+    private int GetAmountFaces(string json)
+    {
+      JObject obj = JObject.Parse(json);
+      var photos = obj.SelectToken("photos")[0];
+      var faces = photos.SelectToken("tags");
+      if (faces != null)
+      {
+        int amountfaces = faces.Count();
+        if (amountfaces == 1 && json.IndexOf("eye_left") != json.LastIndexOf("eye_left"))
+          throw new Exception("I expect more faces!");
+        return faces.Count();
+      }
+      return 0;
+    }
 
     public void FacesAmount(List<int> ids)
     {
@@ -339,18 +356,8 @@ namespace MWHackathonHarvester.Services
         }
 
         var entry = db.Entries.Single(e => e.id == id);
-        
-        JObject obj = JObject.Parse(entry.facialdata);
-        var photos = obj.SelectToken("photos")[0];
-        var faces = photos.SelectToken("tags");
-        if (faces != null)
-        {
-          int amountfaces = faces.Count();
-          if (amountfaces == 1 && entry.facialdata.IndexOf("eye_left") != entry.facialdata.LastIndexOf("eye_left"))
-            throw new Exception("I expect more faces!");
-          entry.facial_amount = faces.Count();
-          db.SubmitChanges();
-        }
+        entry.facial_amount = GetAmountFaces(entry.facialdata);
+        db.SubmitChanges();
       }
     }
   }
