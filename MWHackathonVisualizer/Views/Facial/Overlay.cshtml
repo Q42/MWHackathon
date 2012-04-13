@@ -4,11 +4,25 @@
   MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
 }
 <style>
-img { position:absolute;
-      top:0; left:0; -webkit-mask-repeat: no-repeat; }
+canvas { position:absolute;
+      top:0; left:0; }
   .count {display:none;}
 </style>
-<img src="@Model.Url" id="artobject" />
+@*<img src="@Model.Url" id="artobject" />*@
+
+<canvas id="artobject" width="@Model.Width" height="@Model.Height">
+  <p>Sorry, your browser doesn't support canvas.</p>
+</canvas>
+
+<script>
+  var ctx1 = document.getElementById('artobject').getContext('2d');
+  var img1 = new Image();
+  img1.onload = function () {
+    ctx1.drawImage(img1, 0, 0);
+  };
+  img1.src = '@Model.Url';
+</script>
+
 
 @{ int count = 0; }
 @foreach (var face in uploaded.Items)
@@ -16,11 +30,32 @@ img { position:absolute;
   int originalFaceHeight = (int)((Model.Items[count].Height / 100) * (double)Model.Height);
   int overlayFaceHeight = (int)((face.Height / 100) * (double)uploaded.Height);
   double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
-  <img src="@uploaded.Url" id="picture" style="-webkit-mask-image: url(http://www.webkit.org/blog-files/circle.svg);
+  <!--<img src="@uploaded.Url" id="picture" style="-webkit-mask-image: url(http://www.webkit.org/blog-files/circle.svg);
     height: @((int)(ratio * uploaded.Height))px;" />
   <div class="count">(@Model.Items[count].Height * @Model.Height = @originalFaceHeight) / (@face.Height * @uploaded.Height = @overlayFaceHeight) = @ratio</div>
+  -->
+  <canvas id="myDrawing" width="@Model.Width" height="@Model.Height">
+    <p>Sorry, your browser doesn't support canvas.</p>
+  </canvas>
+
+  <script>
+    var ctx = document.getElementById('myDrawing').getContext('2d');
+    var img = new Image();
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, @((int)(ratio * uploaded.Width)),@((int)(ratio * uploaded.Height)));
+    };
+    img.src = '@uploaded.Url';
+  </script>
+  
   count++;
 }
+
+
+<script>
+
+
+
+</script>
 
 @*<style>
 #picture
