@@ -7,6 +7,7 @@ using MWHackathonHarvester.Services;
 using MWHackathon.Core.Models;
 using System.Data.Linq;
 using System.Net;
+using System.Web.Script.Serialization;
 
 namespace MWHackathonVisualizer.Controllers
 {
@@ -34,9 +35,10 @@ namespace MWHackathonVisualizer.Controllers
       using (var db = new DatabaseService())
       {
         string json = db.FacialData(url);
-
+        var faces = new Faces(json);
+        return Json(faces, JsonRequestBehavior.AllowGet);
       }
-      return new EmptyResult();
+
     }
 
   }

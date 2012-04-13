@@ -53,7 +53,16 @@ namespace MWHackathonHarvester.Services
       }
     }
 
-    public string GetText(JObject obj, string path)
+    public static string GetText(JToken obj, string path)
+    {
+      string id = null;
+      var idEl = obj.SelectToken(path, false);
+      if (idEl != null)
+        id = idEl.Value<string>();
+      return id;
+    }
+
+    public static string GetText(JObject obj, string path)
     {
       string id = null;
       var idEl = obj.SelectToken(path, false);
