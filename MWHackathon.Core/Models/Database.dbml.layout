@@ -2,23 +2,23 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Database">
   <DataContextMoniker Name="/DatabaseDataContext" />
   <nestedChildShapes>
-    <classShape Id="28f882b2-bf1a-4a29-86a9-7e09622c52f1" absoluteBounds="1.125, 1.25, 2, 1.1939925130208333">
+    <classShape Id="907742af-d448-4661-bf86-fa737db91cb0" absoluteBounds="0.75, 1.625, 2, 1.1939925130208335">
       <DataClassMoniker Name="/DatabaseDataContext/Feed" />
       <nestedChildShapes>
-        <elementListCompartment Id="4eb0154e-5693-4861-800c-d5cd4aca4458" absoluteBounds="1.1399999999999997, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="81532d04-e4c7-4812-9080-2df2476f47f0" absoluteBounds="0.765, 2.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="57b0cc77-a8db-4e4f-bc7e-854996c227be" absoluteBounds="5, 1.5, 2, 2.1554996744791666">
+    <classShape Id="c747e1bd-ab2b-4bf6-83f7-c25d5d4dbbaf" absoluteBounds="4.125, 2.125, 2, 2.9247054036458331">
       <DataClassMoniker Name="/DatabaseDataContext/Entry" />
       <nestedChildShapes>
-        <elementListCompartment Id="1076473d-5f89-4ac5-87ab-068c935a2a2c" absoluteBounds="5.015, 1.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d2d8089e-e185-4d4f-a991-19c53b152dd1" absoluteBounds="4.14, 2.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.125 : 1.97199625651042); (5 : 1.97199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.47199625651042); (4.125 : 2.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DatabaseDataContext/Feed/Feed_Entry" />
       <nodes>
-        <classShapeMoniker Id="28f882b2-bf1a-4a29-86a9-7e09622c52f1" />
-        <classShapeMoniker Id="57b0cc77-a8db-4e4f-bc7e-854996c227be" />
+        <classShapeMoniker Id="907742af-d448-4661-bf86-fa737db91cb0" />
+        <classShapeMoniker Id="c747e1bd-ab2b-4bf6-83f7-c25d5d4dbbaf" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

@@ -46,6 +46,8 @@ namespace MWHackathonHarvester.Services
 
           string name = GetEntryName(el);
           string imageurl = GetEntryImageUrl(el);
+          int imageheight = GetImageHeight(el);
+          int imagewidth = GetImageWidth(el);
 
           yield return new Entry
           {
@@ -54,7 +56,9 @@ namespace MWHackathonHarvester.Services
             lastimported_date = downloadedDate,
             object_id = id,
             object_name = name,
-            object_imageurl = imageurl
+            object_imageurl = imageurl,
+            imageheight = imageheight,
+            imagewidth = imagewidth
           };
         }
       }
@@ -67,7 +71,6 @@ namespace MWHackathonHarvester.Services
       if (idEl != null)
         id = idEl.InnerText;
       return id;
-
     }
 
   }

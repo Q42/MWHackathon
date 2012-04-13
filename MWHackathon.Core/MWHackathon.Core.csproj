@@ -41,6 +41,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="Feeds\BrooklynMuseum.cs" />
     <Compile Include="Feeds\CooperHewitt.cs" />
     <Compile Include="Feeds\AmsterdamMuseum.cs" />
+    <Compile Include="Feeds\DeviantArt.cs" />
     <Compile Include="Feeds\StedelijkMuseum.cs" />
     <Compile Include="Feeds\WestAustralia.cs" />
     <Compile Include="Feeds\MuseumVictoria.cs" />
@@ -69,6 +71,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\FaceService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\CSVService.cs" />

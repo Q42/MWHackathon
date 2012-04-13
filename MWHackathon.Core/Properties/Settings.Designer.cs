@@ -33,5 +33,16 @@ namespace MWHackathon.Core.Properties {
                 return ((string)(this["mwhackathonConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost\\sqlexpress;Initial Catalog=temp_oai_lukas;Integrated Securi" +
+            "ty=True")]
+        public string temp_oai_lukasConnectionString {
+            get {
+                return ((string)(this["temp_oai_lukasConnectionString"]));
+            }
+        }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model List<Entry>
+@{
+    ViewBag.Title = "Search";
+    int count = 0;
+}
+
+<style>
+
+  img { float:left; max-width: 500px; max-height: 500px; }
+
+</style>
+
+<h2>@ViewBag.Amount results</h2>
+
+@foreach (var entry in Model)
+{
+  if (!string.IsNullOrEmpty(entry.object_imageurl))
+  {
+    <!--<img src="/image/index?feedid=@entry.feed_id&entryid=@entry.id" title="@entry.object_name" />-->
+  }
+  if (!string.IsNullOrEmpty(entry.object_imageurl))
+  {
+    <img src="@entry.object_imageurl" title="@entry.object_id" />
+  }
+
+}

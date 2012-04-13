@@ -22,7 +22,7 @@ namespace MWHackathon.Core.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="mwhackathon")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="temp_oai_lukas")]
 	public partial class DatabaseDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,7 +39,7 @@ namespace MWHackathon.Core.Models
     #endregion
 		
 		public DatabaseDataContext() : 
-				base(global::MWHackathon.Core.Properties.Settings.Default.mwhackathonConnectionString, mappingSource)
+				base(global::MWHackathon.Core.Properties.Settings.Default.temp_oai_lukasConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -219,6 +219,14 @@ namespace MWHackathon.Core.Models
 		
 		private string _object_imageurl;
 		
+		private System.Nullable<int> _imagewidth;
+		
+		private System.Nullable<int> _imageheight;
+		
+		private string _facialdata;
+		
+		private System.Nullable<int> _facial_amount;
+		
 		private EntityRef<Feed> _Feed;
 		
     #region Extensibility Method Definitions
@@ -239,6 +247,14 @@ namespace MWHackathon.Core.Models
     partial void Onobject_idChanged();
     partial void Onobject_imageurlChanging(string value);
     partial void Onobject_imageurlChanged();
+    partial void OnimagewidthChanging(System.Nullable<int> value);
+    partial void OnimagewidthChanged();
+    partial void OnimageheightChanging(System.Nullable<int> value);
+    partial void OnimageheightChanged();
+    partial void OnfacialdataChanging(string value);
+    partial void OnfacialdataChanged();
+    partial void Onfacial_amountChanging(System.Nullable<int> value);
+    partial void Onfacial_amountChanged();
     #endregion
 		
 		public Entry()
@@ -331,7 +347,7 @@ namespace MWHackathon.Core.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_name", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_name", DbType="VarChar(255)")]
 		public string object_name
 		{
 			get
@@ -351,7 +367,7 @@ namespace MWHackathon.Core.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_object_id", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
 		public string object_id
 		{
 			get
@@ -387,6 +403,86 @@ namespace MWHackathon.Core.Models
 					this._object_imageurl = value;
 					this.SendPropertyChanged("object_imageurl");
 					this.Onobject_imageurlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_imagewidth", DbType="Int")]
+		public System.Nullable<int> imagewidth
+		{
+			get
+			{
+				return this._imagewidth;
+			}
+			set
+			{
+				if ((this._imagewidth != value))
+				{
+					this.OnimagewidthChanging(value);
+					this.SendPropertyChanging();
+					this._imagewidth = value;
+					this.SendPropertyChanged("imagewidth");
+					this.OnimagewidthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_imageheight", DbType="Int")]
+		public System.Nullable<int> imageheight
+		{
+			get
+			{
+				return this._imageheight;
+			}
+			set
+			{
+				if ((this._imageheight != value))
+				{
+					this.OnimageheightChanging(value);
+					this.SendPropertyChanging();
+					this._imageheight = value;
+					this.SendPropertyChanged("imageheight");
+					this.OnimageheightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_facialdata", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string facialdata
+		{
+			get
+			{
+				return this._facialdata;
+			}
+			set
+			{
+				if ((this._facialdata != value))
+				{
+					this.OnfacialdataChanging(value);
+					this.SendPropertyChanging();
+					this._facialdata = value;
+					this.SendPropertyChanged("facialdata");
+					this.OnfacialdataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_facial_amount", DbType="Int")]
+		public System.Nullable<int> facial_amount
+		{
+			get
+			{
+				return this._facial_amount;
+			}
+			set
+			{
+				if ((this._facial_amount != value))
+				{
+					this.Onfacial_amountChanging(value);
+					this.SendPropertyChanging();
+					this._facial_amount = value;
+					this.SendPropertyChanged("facial_amount");
+					this.Onfacial_amountChanged();
 				}
 			}
 		}

@@ -53,12 +53,16 @@ namespace MWHackathonHarvester.Services
       }
     }
 
+    public FileInfo GetFilePath(int feed_id, int entry_id, string extension)
+    {
+      string entryid = entry_id.ToString().PadLeft(6, '0'); 
+      return new FileInfo(Path.Combine(dir.FullName, feed_id.ToString(), entryid.Substring(0, 2), entryid.Substring(0, 3), entryid + extension));
+    }
     public FileInfo GetFilePath(Entry entry)
     {
       if (string.IsNullOrEmpty(entry.object_imageurl))
         return null;
       //Feed feed = feeds.Single(f => f.id == entry.feed_id);
-      string entryId = entry.id.ToString().PadLeft(6,'0');
       string extension = Path.GetExtension(entry.object_imageurl);
 
       // rijksmuseum       "http://www.rijksmuseum.nl/assetimage2.jsp?id=SK-A-4878&aria/maxwidth_288"
@@ -73,7 +77,7 @@ namespace MWHackathonHarvester.Services
       if (extension.Length != 4)
         log.Warn("Extension wrong length: " + extension);
 
-      return new FileInfo(Path.Combine(dir.FullName, entry.feed_id.ToString(), entryId.Substring(0, 2), entryId.Substring(0, 3), entryId + extension));
+      return GetFilePath(entry.feed_id, entry.id, extension);
     }
 
 

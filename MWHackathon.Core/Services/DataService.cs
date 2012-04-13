@@ -18,6 +18,18 @@ namespace MWHackathonHarvester.Services
     public abstract IEnumerable<Entry> GetEntries();
     public abstract string GetEntryImageUrl(Entry entry);
 
+    public virtual int GetImageWidth(XmlElement el)
+    {
+      return 0;
+    }
+
+    public virtual int GetImageHeight(XmlElement el)
+    {
+      return 0;
+    }
+
+
+
     /// <summary>
     /// parses OAI XML and returns each item individually
     /// </summary>

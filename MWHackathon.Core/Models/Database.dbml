@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="mwhackathon" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=mwhackathon;Integrated Security=True" SettingsObjectName="MWHackathon.Core.Properties.Settings" SettingsPropertyName="mwhackathonConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="temp_oai_lukas" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=temp_oai_lukas;Integrated Security=True" SettingsObjectName="MWHackathon.Core.Properties.Settings" SettingsPropertyName="temp_oai_lukasConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Feeds" Member="Feeds">
     <Type Name="Feed">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -13,9 +13,13 @@
       <Column Name="feed_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="lastimported_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="body" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="object_name" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="object_id" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="object_name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="object_id" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="object_imageurl" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="imagewidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="imageheight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="facialdata" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="facial_amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Feed_Entry" Member="Feed" ThisKey="feed_id" OtherKey="id" Type="Feed" IsForeignKey="true" />
     </Type>
   </Table>

@@ -29,6 +29,12 @@ namespace MWHackathonVisualizer
 
     }
 
+    protected void Session_Start()
+    {
+      Session["images"] = "1";
+      Session["tiled"] = "1";
+    }
+
     protected void Application_Start()
     {
       log4net.Config.XmlConfigurator.Configure();

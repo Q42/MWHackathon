@@ -3,14 +3,13 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
 </head>
 
 <body>
   
   @using (Html.BeginForm("Search", "SearchDb", FormMethod.Get))
   {
-    <select name="feedId">
+    <select name="feedId" onchange="document.getElementsByTagName('form')[0].submit()">
       <option value="0">- Everything -</option>
       @foreach (Feed feed in ViewBag.Feeds)
       { 
@@ -19,6 +18,11 @@
     </select>
     <input type="search" name="query" value="@Request.QueryString["query"]" />
     <input type="submit" value="go!" />
+    <br />
+    <input onchange="document.getElementsByTagName('form')[0].submit()" type="checkbox" name="tiled" value="1" @if (ViewBag.tiled)
+                                         {<text>checked="checked"</text> } />
+    <input onchange="document.getElementsByTagName('form')[0].submit()" type="checkbox" name="faces" value="1" @if (ViewBag.faces)
+                                                                                                               {<text>checked="checked"</text> } />
   }
 
   <h2>MWHackathon Harvester</h2>
