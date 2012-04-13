@@ -74,8 +74,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jq.css" />
+    <Content Include="Content\facial.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\global.js" />
+    <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -92,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SearchDb\Index.cshtml" />

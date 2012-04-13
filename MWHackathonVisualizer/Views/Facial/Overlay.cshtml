@@ -3,18 +3,19 @@
   Layout = null;
   MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
 }
-<style>
-canvas { position:absolute;
-      top:0; left:0; }
-  .count {display:none;}
-</style>
-@*<img src="@Model.Url" id="artobject" />*@
 
-<canvas id="artobject" width="@Model.Width" height="@Model.Height">
-  <p>Sorry, your browser doesn't support canvas.</p>
-</canvas>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }    </style>  </head>
+  <body>    <a id="logo" href="/facial">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Look at this piece of art...</h1>        <h2 style="visibility: hidden;">It's you!</h2>
 
-<button onclick="console.log(ctx.toDataURL());">I love it! Download!</button>
+        <canvas id="artobject" width="@Model.Width" height="@Model.Height">
+          <p>Sorry, your browser doesn't support canvas.</p>
+        </canvas>
+
+      </div>
+    </div>
+
+
+
 
 <script>
   var ctx = document.getElementById('artobject').getContext('2d');
@@ -43,11 +44,14 @@ canvas { position:absolute;
 
   double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
   <script>
+  setTimeout(function() {
     var img = new Image();
     img.onload = function () {
       ctx.drawImage(img, @overlayLeft, @overlayTop, @overlayFaceWidth, @overlayFaceHeight, @left, @top, @originalFaceWidth, @originalFaceHeight);
+      $('h2').css('visibility', 'visible');
     };
     img.src = '@uploaded.Url';
+    }, 1000);
   </script>
   
   count++;
@@ -68,3 +72,5 @@ img { position:absolute;
 <img src="@uploaded.Url" id="picture" />
 
 *@
+
+</body></html>
