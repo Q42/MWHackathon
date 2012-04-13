@@ -4,17 +4,49 @@
   MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
 }
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }    </style>  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/base64.js"></script>    <script src="/scripts/canvas2image.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:0; left: 0; }    </style>  </head>
   <body>    <a id="logo" href="/facial">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Look at this piece of art...</h1>        <h2 style="visibility: hidden;">It's you!</h2>
 
+        <div style="position:relative;">
         <canvas id="artobject" width="@Model.Width" height="@Model.Height">
           <p>Sorry, your browser doesn't support canvas.</p>
         </canvas>
-
+        <canvas id="uploadedobject" width="@Model.Width" height="@Model.Height">
+          <p>Sorry, your browser doesn't support canvas.</p>
+        </canvas>
+        </div>
+        <button onclick="download()">I love it; Download!</button>
+        <button onclick="window.location.reload()">This sucks, show me another!</button>
       </div>
     </div>
 
 
+
+    <script>
+
+      function white2transparent(x, y, w, h) {
+        var imageData = ctx2.getImageData(x, y, w, h);
+        var pixel = imageData.data;
+        console.log(pixel);
+        var r = 0, g = 1, b = 2, a = 3;
+        for (var p = 0; p < pixel.length; p += 4) {
+          if (
+          pixel[p + r] > 230 &&
+          pixel[p + g] > 230 &&
+          pixel[p + b] > 230) // if white then change alpha to 0
+          { pixel[p + a] = 0; }
+        }
+
+        ctx2.putImageData(imageData, x, y);
+      }
+
+
+      function download() {
+        var oCanvas = document.getElementById("artobject");
+
+        Canvas2Image.saveAsPNG(oCanvas);
+      }
+    </script>
 
 
 <script>
@@ -23,7 +55,7 @@
   img1.onload = function () {
     ctx.drawImage(img1, 0, 0);
   };
-  img1.src = '@Model.Url';
+  img1.src = '/Image/External?url=@Model.Url';
 </script>
 
 
@@ -44,13 +76,15 @@
 
   double ratio = (double)originalFaceHeight / (double)overlayFaceHeight;
   <script>
+    var ctx2 = document.getElementById('uploadedobject').getContext('2d');
   setTimeout(function() {
     var img = new Image();
     img.onload = function () {
-      ctx.drawImage(img, @overlayLeft, @overlayTop, @overlayFaceWidth, @overlayFaceHeight, @left, @top, @originalFaceWidth, @originalFaceHeight);
+      ctx2.drawImage(img, @overlayLeft, @overlayTop, @overlayFaceWidth, @overlayFaceHeight, @left, @top, @originalFaceWidth, @originalFaceHeight);
       $('h2').css('visibility', 'visible');
+      white2transparent(@left, @top, @originalFaceWidth, @originalFaceHeight);
     };
-    img.src = '@uploaded.Url';
+    img.src = '/Image/External?url=@uploaded.Url';
     }, 1000);
   </script>
   

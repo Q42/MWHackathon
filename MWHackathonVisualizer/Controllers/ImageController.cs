@@ -8,6 +8,8 @@ using MWHackathon.Core.Models;
 using System.Data.Linq;
 using System.Configuration;
 using System.IO;
+using System.Drawing;
+using System.Net;
 
 namespace MWHackathonVisualizer.Controllers
 {
@@ -38,5 +40,29 @@ namespace MWHackathonVisualizer.Controllers
       }
     }
 
+
+    public ActionResult External(string url)
+    {
+      // first download
+      string filename = @"c:\MWHackathon\Assets\uploaded\" + url.Substring(url.LastIndexOf('/') + 1);
+      if (!System.IO.File.Exists(filename))
+      {
+        using (var client = new WebClient())
+        {
+          client.DownloadFile(url, filename);
+        }
+      }
+
+      // then load
+      //Image g = Bitmap.FromFile(filename);
+
+      // then output
+      Response.WriteFile(filename);
+      if (filename.Contains("png"))
+        Response.ContentType = "image/png";
+      else
+        Response.ContentType = "image/jpeg";
+      return new EmptyResult();
+    }
   }
 }

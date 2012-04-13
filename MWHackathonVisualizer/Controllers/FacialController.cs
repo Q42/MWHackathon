@@ -28,15 +28,7 @@ namespace MWHackathonVisualizer.Controllers
 
       if (string.IsNullOrEmpty(url))
         url = "https://twimg0-a.akamaihd.net/profile_images/769005756/paulstork_foto.png";
-
-      string filename = @"c:\MWHackathon\Assets\uploaded\" + url.Substring(url.LastIndexOf('/') + 1);
-      if (!System.IO.File.Exists(filename))
-      {
-        using (var client = new WebClient())
-        {
-          client.DownloadFile(url, filename);
-        }
-      }
+      // http://twimg0-a.akamaihd.net/profile_images/769005756/paulstork_foto.png
 
       using (var db = new DatabaseService())
       {
@@ -48,7 +40,7 @@ namespace MWHackathonVisualizer.Controllers
           throw new Exception("no faces found");
 
         var dbEntries = db.GetAllEntries().Where(e => e.facial_amount == upFaces.Amount && (e.imageheight >= 350 || e.imagewidth >=350));
-        //dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
+        dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
         var dbFaces = GetFaces(dbEntries.Take(100).ToList());
         //if (upFaces.Items.First().GenderConfidence > 50)
           //dbFaces = dbFaces.Where(f => f.Items.First().GenderConfidence > 50 && f.Items.First().Gender == upFaces.Items.First().Gender).ToList();

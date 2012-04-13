@@ -219,7 +219,7 @@ namespace MWHackathonHarvester.Services
           nvc.Add("description", entry.body);
           nvc.Add("image_url", entry.object_imageurl);
           nvc.Add("width", (entry.imagewidth.HasValue ? entry.imagewidth.ToString() : "0"));
-          nvc.Add("height",  (entry.imageheight.HasValue ? entry.imageheight.ToString() : "0"));
+          nvc.Add("height", (entry.imageheight.HasValue ? entry.imageheight.ToString() : "0"));
           nvc.Add("institution", feeds.Single(f => f.id == entry.feed_id).name);
           var result = client.UploadValues(url, nvc);
           log.Info("sent " + result + ", progress: " + count + "/" + amount);
@@ -231,41 +231,41 @@ namespace MWHackathonHarvester.Services
     {
       int amount = entries.Count();
       int count = 0;
-        foreach (var entryid in entries)
+      foreach (var entryid in entries)
+      {
+        count++;
+        Entry entry = db.Entries.FirstOrDefault(e => e.id == entryid);
+        //if (!entry.body.ToLowerInvariant().Contains("photograph"))
+        //{
+        //log.Info("skip! " + count + "/" + amount);
+        //continue;
+        //}
+        var file = img.GetFilePath(entry);
+        if (file != null && file.Exists)
         {
-          count++;
-          Entry entry = db.Entries.FirstOrDefault(e => e.id == entryid);
-          //if (!entry.body.ToLowerInvariant().Contains("photograph"))
-          //{
-            //log.Info("skip! " + count + "/" + amount);
-            //continue;
-          //}
-          var file = img.GetFilePath(entry);
-          if (file != null && file.Exists)
+          //log.Info("loading " + file.FullName);
+          try
           {
-            //log.Info("loading " + file.FullName);
-            try
+            using (var bmp = Bitmap.FromFile(file.FullName))
             {
-              using (var bmp = Bitmap.FromFile(file.FullName))
-              {
 
-                //dbEntry.imagewidth = bmp.Width;
-                //dbEntry.imageheight = bmp.Height;
-                db.ExecuteCommand("update entries set imagewidth=" + bmp.Width + ", imageheight = " + bmp.Height + " where id = " + entry.id);
+              //dbEntry.imagewidth = bmp.Width;
+              //dbEntry.imageheight = bmp.Height;
+              db.ExecuteCommand("update entries set imagewidth=" + bmp.Width + ", imageheight = " + bmp.Height + " where id = " + entry.id);
 
-                //db.SubmitChanges();
-                log.Info("size of " + file.Name + " = " + bmp.Width + "x" + bmp.Height + " , " + count + "/" + amount);
-              }
-            }
-            catch (Exception ex)
-            {
-              log.Warn("Error loading " + file.FullName);
+              //db.SubmitChanges();
+              log.Info("size of " + file.Name + " = " + bmp.Width + "x" + bmp.Height + " , " + count + "/" + amount);
             }
           }
-          else
+          catch (Exception ex)
           {
-            log.Info(count + "/" + amount);
+            log.Warn("Error loading " + file.FullName);
           }
+        }
+        else
+        {
+          log.Info(count + "/" + amount);
+        }
 
       }
     }
@@ -303,8 +303,16 @@ namespace MWHackathonHarvester.Services
         entry.facialdata = FacialData(entry.object_imageurl);
         entry.facial_amount = GetAmountFaces(entry.facialdata);
 
-
-        db.SubmitChanges();
+        try
+        {
+          db.SubmitChanges();
+          //transaction.Commit();
+        }
+        catch (Exception ex)
+        {
+          log.Warn("errort: " + ex.Message);
+          //transaction.Rollback();
+        }
       }
     }
 
