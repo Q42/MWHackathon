@@ -225,5 +225,57 @@ form, input, textarea {
 }
 
 
+      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:0; left: 0; }
+h2 {
+  position:absolute;
+  bottom:4px; right: 0px;
+  -webkit-transform: rotate(-30deg); 
+  -moz-transform: rotate(-30deg);	
+  visibility: hidden;
+}
 
+#again
+{
+    position: absolute;
+  height: 78px;
+  margin: 48px 0 0 275px;
+  background: #11C703;
+  line-height: 20px;
+  color: #fff;
+  padding: 10px 40px;
+  border: solid #444 4px;
+  text-shadow: 1px 1px rgba(0,0,0,0.5);
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  -o-border-radius: 45px;
+  border-radius: 45px;
+  -webkit-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -moz-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -o-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  cursor: pointer;
 
+  }
+  
+  #download
+  {
+      position: absolute;
+  height: 78px;
+  margin: 148px 0 0 275px;
+  background: #444;
+  line-height: 20px;
+  color: #fff;
+  padding: 10px 40px;
+  border: solid #444 4px;
+  text-shadow: 1px 1px rgba(0,0,0,0.5);
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  -o-border-radius: 45px;
+  border-radius: 45px;
+  -webkit-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -moz-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  -o-box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  cursor: pointer;
+
+    }
