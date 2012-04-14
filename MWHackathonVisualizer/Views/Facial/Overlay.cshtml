@@ -4,8 +4,10 @@
   MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
 }
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/base64.js"></script>    <script src="/scripts/canvas2image.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:0; left: 0; }    </style>  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/base64.js"></script>    <script src="/scripts/canvas2image.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:0; left: 0; }      h2 { position:absolute; }    </style>  </head>
   <body>    <a id="logo" href="/facial">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Look at this piece of art...</h1>        <h2 style="visibility: hidden;">It's you!</h2>
+        <button onclick="download()">I love it; Download!</button>
+        <button onclick="window.location.reload()">This sucks, show me another!</button>
 
         <div style="position:relative;">
         <canvas id="artobject" width="@Model.Width" height="@Model.Height">
@@ -15,8 +17,6 @@
           <p>Sorry, your browser doesn't support canvas.</p>
         </canvas>
         </div>
-        <button onclick="download()">I love it; Download!</button>
-        <button onclick="window.location.reload()">This sucks, show me another!</button>
       </div>
     </div>
 
@@ -42,6 +42,8 @@
 
 
       function download() {
+        ctx.drawImage(document.getElementById("uploadedobject"), 0, 0);
+
         var oCanvas = document.getElementById("artobject");
 
         Canvas2Image.saveAsPNG(oCanvas);
