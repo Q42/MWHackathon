@@ -4,11 +4,20 @@
   MWHackathonHarvester.Services.Faces uploaded = ViewBag.Faces;
 }
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/base64.js"></script>    <script src="/scripts/canvas2image.js"></script>    <script src="/scripts/global.js"></script>    <style>      #again, #download { margin-left: @(Model.Width + 20)px; }    </style>  </head>
-  <body>    <a id="logo" href="/facial">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Look at this piece of art...</h1>        <input onclick="window.location.reload(); return false;" type="submit" id="again" value="Another!" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial2.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/base64.js"></script>    <script src="/scripts/canvas2image.js"></script>    <script src="/scripts/global.js"></script>    <script src="/scripts/canvasImageGradient-0.2.js"></script>    <style>      #fb-like, #again, #download { margin-left: @(Model.Width + 20)px; }    </style>  </head>
+  <body>  <div id="fb-root"></div>
+<script>  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  } (document, 'script', 'facebook-jssdk'));</script>    <a id="logo" href="/">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Look at this piece of art...</h1>        @*<div>@ViewBag.Entry.id</div>*@        <input onclick="window.location.href = '/facial/overlay?url=@Request.QueryString["url"]&entry=@ViewBag.NextFace.id'; return false;" type="submit" id="again" value="Another!" />
         <input onclick="download(); return false;" type="submit" id="download" value="Download!" />
 
-        <div style="position:relative; height: @(Model.Height)px; width: @(Model.Width)px;">
+        <div id="fb-like" class="fb-like" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true"></div>
+
+        <div id="imgcontainer" style="position:relative; height: @(Model.Height)px; width: @(Model.Width)px;">
           <canvas id="artobject" width="@Model.Width" height="@Model.Height">
             <p>Sorry, your browser doesn't support canvas.</p>
           </canvas>
@@ -20,14 +29,16 @@
       </div>
     </div>
 
-
+@*          <canvas id="tempcanvas" width="@uploaded.Width" height="@uploaded.Height">
+            <p>Sorry, your browser doesn't support canvas.</p>
+          </canvas>
+*@
 
     <script>
 
       function white2transparent(x, y, w, h) {
         var imageData = ctx2.getImageData(x, y, w, h);
         var pixel = imageData.data;
-        console.log(pixel);
         var r = 0, g = 1, b = 2, a = 3;
         for (var p = 0; p < pixel.length; p += 4) {
           if (
@@ -82,9 +93,25 @@
   setTimeout(function() {
     var img = new Image();
     img.onload = function () {
+      
+      var centerX = @(overlayLeft + (overlayFaceWidth / 2));
+      var centerY = @(overlayTop + (overlayFaceHeight / 2));
+      var radialGradient = ctx.createRadialGradient(centerX, centerY, @(overlayFaceWidth -5), centerX, centerY, @(overlayFaceWidth +3));
+      radialGradient.addColorStop(0, "#000");
+      radialGradient.addColorStop(1, "transparent");
+      //console.log(centerX, centerY, radialGradient);
+      //var tempcanvas = document.getElementById("tempcanvas").getContext('2d');
+      
+      //tempcanvas.drawImageGradient(img, 12, 65, radialGradient);
+      //tempcanvas.drawImageGradient(img, 0, 100, radialGradient);
+      //tempcanvas.drawImage(img, 0, 0);
+      
       ctx2.drawImage(img, @overlayLeft, @overlayTop, @overlayFaceWidth, @overlayFaceHeight, @left, @top, @originalFaceWidth, @originalFaceHeight);
+      
+      
       $('h2').css('visibility', 'visible');
-      white2transparent(@left, @top, @originalFaceWidth, @originalFaceHeight);
+      //white2transparent(@left, @top, @originalFaceWidth, @originalFaceHeight);
+
     };
     img.src = '/Image/External?url=@uploaded.Url';
     }, 1000);
@@ -108,5 +135,19 @@ img { position:absolute;
 <img src="@uploaded.Url" id="picture" />
 
 *@
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2714808-20']);
+  _gaq.push(['_trackPageview']);
+
+  (function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 
 </body></html>

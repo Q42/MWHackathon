@@ -1,1 +1,58 @@
-﻿@{Layout = null;}<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html>  <head>    <title>Museumify me!</title>    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">    <link href="/content/facial.css" rel="stylesheet" type="text/css">    <link href="/content/jq.css" rel="stylesheet" type="text/css">    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>    <script src="/scripts/jquery.placeholder.js"></script>    <script src="/scripts/global.js"></script>    <style type="text/css">      h1 { font-size: 70px; }    </style>  </head>  <body>    <a id="logo" href="/facial">home</a><div id="topbar">          <div id="main">      <div class="page">        <h1>Museumify me!</h1>        <form id="form" action="/facial/overlay" method="GET">This is me:         @*<input type="text" name="twittername" id="target" placeholder="@@twitter" value="">        <span>or provide the url to an image of you</span>*@        <textarea name="url" id="award" placeholder="url of an image of you"></textarea>        <span id="award-text">&nbsp;&nbsp;</span><input id="submit" type="submit" value="Museumify me!"></form>        <p id="twitter-msg">                  </p>      </div>    </div>    <div id="footer">      <div class="page">        <p id="disclaimer"><a href="/about">Museumify me!</a> was created during <a href="http://mwhackathon.com">@@MWHackathon</a>.        </p>      </div>    </div>  </body></html>
+﻿@model int
+@{Layout = null;}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Museumify me!</title>
+    <link rel="stylesheet" type="text/css" href="http://q42.nl/w00tcamp/w00tcamp-footer.css">
+    <link href="/content/facial2.css" rel="stylesheet" type="text/css">
+    <link href="/content/jq.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>
+    <script src="/scripts/jquery.placeholder.js"></script>
+    <script src="/scripts/global.js"></script>
+    <style type="text/css">
+      h1 { font-size: 70px; }
+    </style>
+  </head>
+  <body>
+    <a id="logo" href="/">home</a><div id="topbar">
+      
+    <div id="main">
+      <div class="page">
+        <h1>Museumify me!</h1>
+        <form id="form" action="/facial/overlay" method="GET">This is me: 
+        @*<input type="text" name="twittername" id="target" placeholder="@@twitter" value="">
+        <span>or provide the url to an image of you</span>*@
+        <input type="hidden" name="entry" value="@Model" />
+        <textarea name="url" id="award" placeholder="url of an image of you"></textarea>
+        <span id="award-text">&nbsp;&nbsp;</span><input id="submit" type="submit" value="Museumify me!"></form>
+<div>          or try <a href="/facial/overlay?entry=2468&url=http://museummobile.info/wp-content/uploads/2010/05/NancyPic.png">nancy</a>!!
+</div>
+        <p id="twitter-msg">
+        </p>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="page">
+        <p id="disclaimer"><a href="/about">Museumify me!</a> was created during <a href="http://mwhackathon.com">@@MWHackathon</a>.
+        </p>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-2714808-20']);
+      _gaq.push(['_trackPageview']);
+
+      (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+</script>
+  </body>
+</html>

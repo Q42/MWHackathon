@@ -225,7 +225,7 @@ form, input, textarea {
 }
 
 
-      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:0; left: 0; }
+      h1 { font-size: 70px; }      #artobject, #uploadedobject { position:absolute; top:5px; left: 5px;                                     }
 h2 {
   position:absolute;
   bottom:4px; right: 0px;
@@ -257,6 +257,12 @@ h2 {
 
   }
   
+  #fb-like
+{
+        position: absolute;
+  margin: 248px 0 0 275px;
+
+  }  
   #download
   {
       position: absolute;
@@ -279,3 +285,14 @@ h2 {
   cursor: pointer;
 
     }
+    
+          #imgcontainerw {        border: solid #444 4px;    -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  -o-box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  padding:10px;
+    }

@@ -24,7 +24,7 @@ namespace MWHackathonVisualizer
       routes.MapRoute(
           "Default", // Route name
           "{controller}/{action}/{id}", // URL with parameters
-          new { controller = "SearchDb", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+          new { controller = "Facial", action = "Index", id = UrlParameter.Optional } // Parameter defaults
       );
 
     }

@@ -15,59 +15,98 @@ namespace MWHackathonVisualizer.Controllers
   {
     public ActionResult Index()
     {
-      return View();
+      var rnd = new Random();
+      using (var db = new DatabaseService())
+      {
+        var allentries = GetEntries(db, 1);
+        var dbNextEntry = allentries.ElementAt(rnd.Next(0, allentries.Count));
+        var dbNextFace = GetFace(dbNextEntry);
+
+        return View(dbNextEntry.id);
+      }
     }
 
-    public ActionResult Overlay(string url, string twittername)
+    public ActionResult Overlay(string url, int entry)
     {
-      if (string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(twittername))
-      { 
-        // get twitter shizzl
-        twittername = twittername.Trim('@', ' ');
-      }
-
       if (string.IsNullOrEmpty(url))
         url = "https://twimg0-a.akamaihd.net/profile_images/769005756/paulstork_foto.png";
-      // http://twimg0-a.akamaihd.net/profile_images/769005756/paulstork_foto.png
+        //url = "http://museummobile.info/wp-content/uploads/2010/05/NancyPic.png";
 
       using (var db = new DatabaseService())
       {
-        string json = db.FacialData(url);
+        string cachefile = @"c:\MWHackathon\Assets\uploaded\" + url.Substring(url.LastIndexOf('/') + 1) + ".json";
+        string json = "";
+        if (System.IO.File.Exists(cachefile))
+          json = System.IO.File.ReadAllText(cachefile);
+        else
+        {
+          json = db.FacialData(url);
+          System.IO.File.WriteAllText(cachefile, json);
+        }
         var upFaces = new Faces(json, url, null, null);
 
         int amount = upFaces.Amount;
         if (amount < 1)
-          throw new Exception("no faces found");
+        {
+          Response.Write("Darn, I can't find a face in there! Please go back and try a different one.");
+          return new EmptyResult();
+        }
+        if (amount > 1)
+        {
+          Response.Write("Sorry, this one seems to have multiple faces. I haven't built that yet. Please go back and try a different one.");
+          return new EmptyResult();
+        }
 
-        var dbEntries = db.GetAllEntries().Where(e => e.facial_amount == upFaces.Amount && (e.imageheight >= 350 || e.imagewidth >=350));
-        dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
-        var dbFaces = GetFaces(dbEntries.Take(100).ToList());
-        //if (upFaces.Items.First().GenderConfidence > 50)
-          //dbFaces = dbFaces.Where(f => f.Items.First().GenderConfidence > 50 && f.Items.First().Gender == upFaces.Items.First().Gender).ToList();
-
-
+        var dbEntry = db.GetAllEntries().First(e => e.id == entry);
+        var dbFace = GetFace(dbEntry);
         var rnd = new Random();
-        var dbFace = dbFaces.OrderBy(e => rnd.Next()).First();
+        var allentries = GetEntries(db, amount);
+        var dbNextEntry = allentries.ElementAt(rnd.Next(0,allentries.Count));
+        var dbNextFace = GetFace(dbNextEntry);
 
+        ViewBag.Entry = dbEntry;
         ViewBag.Faces = upFaces;
+        ViewBag.NextFace = dbNextEntry;
         return View(dbFace);
-
-        //return Json(dbFaces, JsonRequestBehavior.AllowGet);
       }
 
     }
+
+    private List<Entry> GetEntries(DatabaseService db, int amountOfFaces)
+    {
+      List<int> preferredids = new List<int>() {
+          2468, 48083, 47949, 23679, 41523, 15819, 48189, 38872, 23689, 23685, 38462,
+          3088, 23683, 40049, 4799, 39316, 40495, 20599, 18432, 40497
+        };
+
+      List<int> excludeids = new List<int>() {
+          21080, 13728, 16923, 24345, 38270, 14921, 24373
+        };
+
+
+      var rnd = new Random();
+      var dbEntries = db.GetAllEntries().Where(e => e.facial_amount == amountOfFaces && (e.imageheight >= 350 || e.imagewidth >= 350));
+      dbEntries = dbEntries.Where(e => e.feed_id != 1); // not rijksmuseum, size klopt niet!
+      dbEntries = dbEntries.Where(e => preferredids.Contains(e.id));
+      dbEntries = dbEntries.Where(e => !excludeids.Contains(e.id));
+      return dbEntries.OrderBy(e => rnd.Next()).Take(100).ToList();
+
+    }
+
 
     private List<Faces> GetFaces(List<Entry> entries)
     {
       var result = new List<Faces>();
 
       foreach (var entry in entries)
-      {
-        result.Add(new Faces(entry.facialdata, entry.object_imageurl, entry.imagewidth, entry.imageheight));
-      }
+        result.Add(GetFace(entry));
 
       return result;
     }
 
+    private Faces GetFace(Entry entry)
+    {
+      return new Faces(entry.facialdata, entry.object_imageurl, entry.imagewidth, entry.imageheight);
+    }
   }
 }
